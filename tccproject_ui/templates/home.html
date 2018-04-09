@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>Cursos</title>
+	</head>
+	<body>
+		<h1>Cursos</h1>
+		
+		{% for curso in cursos %}
+			{{ curso.titulo }} <br>
+		{% endfor %}
+		
+	</body>
+</html>
