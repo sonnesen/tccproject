@@ -1,9 +1,11 @@
 from rest_framework import viewsets, permissions
 
+from cursos.models import Curso, Categoria, Instrutor, Unidade, Atividade    ,\
+    VideoAula, MaterialComplementar
 from cursos.permissions import IsAdminOrReadOnly
-from cursos.models import Curso, Categoria, Instrutor
-from cursos.serializers import CursoSerializer, CategoriaSerializer,\
-    InstrutorSerializer
+from cursos.serializers import CursoSerializer, CategoriaSerializer, \
+    InstrutorSerializer, UnidadeSerializer, AtividadeSerializer,\
+    VideoAulaSerializer, MaterialComplementarSerializer
 
 
 class CursoViewSet(viewsets.ModelViewSet):
@@ -40,3 +42,50 @@ class InstrutorViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
     
+
+class UnidadeViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    
+    queryset = Unidade.objects.all()
+    serializer_class = UnidadeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly)
+    
+class AtividadeViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    
+    queryset = Atividade.objects.all()
+    serializer_class = AtividadeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly)    
+    
+    
+class VideoAulaViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+     
+    queryset = VideoAula.objects.all()
+    serializer_class = VideoAulaSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly)    
+     
+ 
+class MaterialComplementarViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+     
+    queryset = MaterialComplementar.objects.all()
+    serializer_class = MaterialComplementarSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly)    
+     
