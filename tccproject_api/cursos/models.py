@@ -1,4 +1,5 @@
 from django.db import models
+from abc import abstractproperty
 
 
 class Curso(models.Model):
@@ -13,29 +14,33 @@ class Curso(models.Model):
 
     class Meta:
         ordering = ('criado_em',)
+        db_table = 'curso'
         
     
 class Categoria(models.Model):
     nome = models.CharField(max_length=100, null=False)
     
-    class Meta:
-        ordering = ('nome', )
-        
     def __str__(self):
         return self.nome
+    
+    class Meta:
+        ordering = ('nome', )
+        db_table = 'categoria'        
+    
     
 class Instrutor(models.Model):
     nome = models.CharField(max_length=100, null=False)
     contato = models.CharField(max_length=100, null=False)
     resumo = models.TextField(max_length=200, null=False)
     
-    class Meta:
-        ordering = ('nome', )
-        
     def __str__(self):
         return self.nome
     
-
+    class Meta:
+        ordering = ('nome', )
+        db_table = 'instrutor'
+        
+    
 class Unidade(models.Model):
     titulo = models.CharField('Título', max_length=100, null=False)
     curso = models.ForeignKey('Curso', related_name='unidades', on_delete=models.CASCADE)
@@ -43,46 +48,56 @@ class Unidade(models.Model):
     def __str__(self):
         return self.titulo
     
+    class Meta:
+        db_table = 'unidade'
+    
     
 class Atividade(models.Model):
     titulo = models.CharField('Título', max_length=100, null=False)
     unidade = models.ForeignKey('Unidade', related_name='atividades', on_delete=models.CASCADE)
     
-    TIPO_ATIVIDADE = (
-        (0, 'Vídeo'),
-        (1, 'Material Complementar'),
-        (2, 'Avaliação')
-    )
+    TIPO_ATIVIDADE = ((0, 'Vídeo'), (1, 'Material Complementar'), (2, 'Avaliação'))
     
     tipo = models.IntegerField(choices=TIPO_ATIVIDADE, default=0)
     
     def __str__(self):
         return self.titulo
     
-class Recurso():
-    uri = models.URLField()
-        
-class VideoAula(Atividade, Recurso):
-    
-    def __init__(self):
-        self.tipo = Atividade.TIPO_ATIVIDADE(0)
-        
     class Meta:
-        proxy = True
+        db_table = 'atividade'
     
 
-class MaterialComplementar(Atividade, Recurso):
+class VideoAula(models.Model):
+    uri = models.URLField()
+    atividade = models.OneToOneField('Atividade', on_delete=models.CASCADE, primary_key=True)
     
-    def __init__(self):
-        self.tipo = Atividade.TIPO_ATIVIDADE(1)
+    def __init__(self, uri=None, atividade=None):
+        self.atividade.tipo = 0
+        self.uri = uri
+        self.atitivade = atividade
         
     class Meta:
-        proxy = True
+        db_table = 'video_aula'
         
-class Avaliacao(Atividade):
+
+class MaterialComplementar(models.Model):
+    uri = models.URLField()
+    atividade = models.OneToOneField('Atividade', on_delete=models.CASCADE, primary_key=True)
     
-    def __init__(self):
-        self.tipo = Atividade.TIPO_ATIVIDADE(2)
+    def __init__(self, uri=None, atividade=None):
+        self.atividade.tipo = 1
+        self.uri = uri
+        self.atitivade = atividade
         
     class Meta:
-        proxy = True
+        db_table = 'material_compl'
+        
+        
+class Avaliacao(models.Model):
+    atividade = models.OneToOneField('Atividade', on_delete=models.CASCADE, primary_key=True)
+    
+    def __init__(self):
+        self.atividade.tipo = 2
+
+    class Meta:
+        db_table = 'avaliacao'
