@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from cursos.models import Curso, Categoria, Instrutor, Unidade, Atividade,\
-    VideoAula, MaterialComplementar
+    VideoAula, MaterialComplementar, Avaliacao, Arquivo, Questao, Alternativa
 
 
 class CursoSerializer(serializers.HyperlinkedModelSerializer):    
@@ -31,18 +31,42 @@ class UnidadeSerializer(serializers.HyperlinkedModelSerializer):
 class AtividadeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Atividade
-        fields = ('url', 'titulo', 'unidade') 
+        fields = ('url', 'titulo', 'unidade', 'video', 'material', 'avaliacao') 
         
 
-class VideoAulaSerializer(serializers.HyperlinkedModelSerializer):
+class ArquivoSerializer(serializers.HyperlinkedModelSerializer):
+    atividade = serializers.SlugRelatedField(
+        many=False, 
+        read_only=True,
+        slug_field='titulo'
+    )
+    
     class Meta:
-        model = VideoAula
-        fields = ('url', 'descricao', 'uri', 'atividade')        
+        model = Arquivo
+        fields = ('url', 'uri', 'atividade', 'tipo')        
          
          
-class MaterialComplementarSerializer(serializers.HyperlinkedModelSerializer):
+class AvaliacaoSerializer(serializers.HyperlinkedModelSerializer):
+    atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    
     class Meta:
-        model = MaterialComplementar
-        fields = ('url', 'descricao', 'uri', 'atividade')
+        model = Avaliacao
+        fields = ('url', 'atividade')        
+        
+        
+class QuestaoSerializer(serializers.HyperlinkedModelSerializer):
+    atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    
+    class Meta:
+        model = Questao
+        fields = ('url', 'atividade')        
+        
+        
+class AlternativaSerializer(serializers.HyperlinkedModelSerializer):
+    atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    
+    class Meta:
+        model = Alternativa
+        fields = ('url', 'atividade')        
 
 

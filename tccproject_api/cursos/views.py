@@ -1,11 +1,11 @@
 from rest_framework import viewsets, permissions
 
 from cursos.models import Curso, Categoria, Instrutor, Unidade, Atividade    ,\
-    VideoAula, MaterialComplementar
+    VideoAula, MaterialComplementar, Avaliacao
 from cursos.permissions import IsAdminOrReadOnly
 from cursos.serializers import CursoSerializer, CategoriaSerializer, \
     InstrutorSerializer, UnidadeSerializer, AtividadeSerializer,\
-    VideoAulaSerializer, MaterialComplementarSerializer
+    VideoAulaSerializer, MaterialComplementarSerializer, AvaliacaoSerializer
 
 
 class CursoViewSet(viewsets.ModelViewSet):
@@ -86,6 +86,18 @@ class MaterialComplementarViewSet(viewsets.ModelViewSet):
      
     queryset = MaterialComplementar.objects.all()
     serializer_class = MaterialComplementarSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsAdminOrReadOnly)    
+    
+    
+class AvaliacaoComplementarViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+     
+    queryset = Avaliacao.objects.all()
+    serializer_class = AvaliacaoSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
