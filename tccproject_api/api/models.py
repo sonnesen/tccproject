@@ -42,7 +42,7 @@ class Instrutor(models.Model):
     
 class Unidade(models.Model):
     titulo = models.CharField('Título', max_length=100)
-    curso = models.ForeignKey('Curso', related_name='unidades', on_delete=models.CASCADE)
+    curso = models.ForeignKey('Curso', related_name='unidades', on_delete=models.SET_NULL, null=True)
         
     def __str__(self):
         return self.titulo

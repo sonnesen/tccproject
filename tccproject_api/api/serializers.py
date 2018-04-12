@@ -4,49 +4,49 @@ from api.models import Categoria, Unidade, Atividade, Arquivo
 from api.models import Curso, Instrutor
 
 
-class CursoSerializer(serializers.HyperlinkedModelSerializer):
+class CursoSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Curso
-        fields = ('url', 'titulo', 'criado_em', 'categoria', 'instrutor', 'palavras_chave', 'unidades')
-        read_only_fields = ('criado_em')
+        fields = ('id', 'titulo', 'criado_em', 'categoria', 'instrutor', 'palavras_chave')
+        read_only_fields = ('criado_em',)
         
 
-class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
+class CategoriaSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Categoria
-        fields = ('url', 'nome')
+        fields = ('id', 'nome')
          
  
-class InstrutorSerializer(serializers.HyperlinkedModelSerializer):
+class InstrutorSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Instrutor
-        fields = ('url', 'nome', 'contato', 'resumo')
+        fields = ('id', 'nome', 'contato', 'resumo')
          
          
-class UnidadeSerializer(serializers.HyperlinkedModelSerializer):
+class UnidadeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Unidade
-        fields = ('url', 'titulo', 'curso')
+        fields = ('id', 'titulo', 'curso')
         
          
-class ArquivoSerializer(serializers.HyperlinkedModelSerializer):
+class ArquivoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Arquivo
         fields = ('uri', 'tipo')
                  
                  
-class AtividadeSerializer(serializers.HyperlinkedModelSerializer):
+class AtividadeSerializer(serializers.ModelSerializer):
     
     arquivo = ArquivoSerializer(many=False)
     
     class Meta:
         model = Atividade
-        fields = ('url', 'titulo', 'unidade', 'arquivo') 
+        fields = ('id', 'titulo', 'unidade', 'arquivo') 
         
     def create(self, validated_data):
         arquivo_data = validated_data.pop('arquivo')
@@ -75,27 +75,27 @@ class AtividadeSerializer(serializers.HyperlinkedModelSerializer):
         
            
            
-# class AvaliacaoSerializer(serializers.HyperlinkedModelSerializer):
+# class AvaliacaoSerializer(serializers.ModelSerializer):
 #     atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
 #     
 #     class Meta:
 #         model = Avaliacao
-#         fields = ('url', 'atividade')        
+#         fields = ('id', 'atividade')        
 #         
 #         
-# class QuestaoSerializer(serializers.HyperlinkedModelSerializer):
+# class QuestaoSerializer(serializers.ModelSerializer):
 #     atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
 #     
 #     class Meta:
 #         model = Questao
-#         fields = ('url', 'atividade')        
+#         fields = ('id', 'atividade')        
 #         
 #         
-# class AlternativaSerializer(serializers.HyperlinkedModelSerializer):
+# class AlternativaSerializer(serializers.ModelSerializer):
 #     atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
 #     
 #     class Meta:
 #         model = Alternativa
-#         fields = ('url', 'atividade')        
+#         fields = ('id', 'atividade')        
 
 

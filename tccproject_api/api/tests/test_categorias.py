@@ -40,17 +40,19 @@ class CategoriaViewTestCase(TestCase):
         self.assertEqual(self.response.status_code, status.HTTP_404_NOT_FOUND)
     
     def test_api_can_update_categoria(self):        
+        self.data = {'nome': 'Dispositivos Móveis'}
         self.response = self.client.put(
             '{}{}/'.format(self.url, 1),
-            data={'nome': 'Dispositivos Móveis'},
+            data=self.data,
             format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
         
     def test_api_can_not_update_categoria(self):
         self.client.logout()        
+        self.data = {'nome': 'Dispositivos Móveis'}
         self.response = self.client.put(
             '{}{}/'.format(self.url, 1),
-            data={'nome': 'Dispositivos Móveis'},
+            data=self.data,
             format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
         
