@@ -1,8 +1,8 @@
 from rest_framework import viewsets, permissions
 
-from cursos.models import Curso, Categoria, Instrutor, Unidade, Atividade
-from cursos.permissions import IsAdminOrReadOnly
-from cursos.serializers import CursoSerializer, CategoriaSerializer, \
+from api.models import Curso, Categoria, Instrutor, Unidade, Atividade
+from api.permissions import IsAdminOrReadOnly
+from api.serializers import CursoSerializer, CategoriaSerializer, \
     InstrutorSerializer, UnidadeSerializer, AtividadeSerializer
 
 

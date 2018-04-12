@@ -4,8 +4,8 @@ from django.db import models
 class Curso(models.Model):
     titulo = models.CharField('Título', max_length=100)
     criado_em = models.DateField('Data de criação', auto_now=True)
-    categoria = models.ForeignKey('Categoria', related_name='cursos', on_delete=models.CASCADE)
-    instrutor = models.ForeignKey('Instrutor', related_name='cursos', on_delete=models.CASCADE)
+    categoria = models.ForeignKey('Categoria', related_name='api', on_delete=models.CASCADE)
+    instrutor = models.ForeignKey('Instrutor', related_name='api', on_delete=models.CASCADE)
     palavras_chave = models.CharField('Palavras-Chave', max_length=100, null=True)
         
     def __str__(self):

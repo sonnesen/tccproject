@@ -1,28 +1,33 @@
 from rest_framework import serializers
 
-from cursos.models import Categoria, Unidade, Atividade, Arquivo
-from cursos.models import Curso, Instrutor
+from api.models import Categoria, Unidade, Atividade, Arquivo
+from api.models import Curso, Instrutor
 
 
-class CursoSerializer(serializers.HyperlinkedModelSerializer):    
+class CursoSerializer(serializers.HyperlinkedModelSerializer):
+        
     class Meta:
         model = Curso
         fields = ('url', 'titulo', 'criado_em', 'categoria', 'instrutor', 'palavras_chave', 'unidades')
+        read_only_fields = ('criado_em')
         
 
-class CategoriaSerializer(serializers.HyperlinkedModelSerializer):    
+class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
+    
     class Meta:
         model = Categoria
         fields = ('url', 'nome')
          
  
-class InstrutorSerializer(serializers.HyperlinkedModelSerializer):    
+class InstrutorSerializer(serializers.HyperlinkedModelSerializer):
+        
     class Meta:
         model = Instrutor
         fields = ('url', 'nome', 'contato', 'resumo')
          
          
 class UnidadeSerializer(serializers.HyperlinkedModelSerializer):
+    
     class Meta:
         model = Unidade
         fields = ('url', 'titulo', 'curso')
@@ -36,6 +41,7 @@ class ArquivoSerializer(serializers.HyperlinkedModelSerializer):
                  
                  
 class AtividadeSerializer(serializers.HyperlinkedModelSerializer):
+    
     arquivo = ArquivoSerializer(many=False)
     
     class Meta:
