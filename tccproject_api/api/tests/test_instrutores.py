@@ -31,13 +31,27 @@ class InstrutorViewTestCase(TestCase):
         self.response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
         
+    def test_api_can_not_create_instrutor(self):
+        self.client.logout()
+        self.data = {
+            'nome': 'Siclano da Silva',
+            'contato': 'siclano@test.com',
+            'resumo': 'Vis te quas soluta, no augue tollit vel.'
+        }
+        self.response = self.client.post(self.url, self.data, format='json')
+        self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
+        
     def test_api_can_get_instrutor(self):
-        self.response = self.client.get(self.url, kwargs={'pk': 1}, format='json')
+        self.response = self.client.get('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)    
+        
+    def test_api_can_not_get_instrutor(self):
+        self.response = self.client.get('{}{}/'.format(self.url, 9999), format='json')
+        self.assertEqual(self.response.status_code, status.HTTP_404_NOT_FOUND)
     
     def test_api_can_update_instrutor(self):
         self.response = self.client.put(
-            '{url}{pk}/'.format(url=self.url, pk=1),
+            '{}{}/'.format(self.url, 1),
             data={
             'nome': 'Fulano de Tal',
             'contato': 'fulano@gmail.com',
@@ -46,6 +60,23 @@ class InstrutorViewTestCase(TestCase):
             format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)       
         
+    def test_api_can_not_update_instrutor(self):
+        self.client.logout()
+        self.response = self.client.put(
+            '{}{}/'.format(self.url, 1),
+            data={
+            'nome': 'Fulano de Tal',
+            'contato': 'fulano@gmail.com',
+            'resumo': 'Lorem ipsum dolor sit amet, te quo illum iuvaret corpora.'
+        },
+            format='json')
+        self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
+        
     def test_api_can_delete_instrutor(self):
-        self.response = self.client.delete('{url}{pk}/'.format(url=self.url, pk=1), format='json')
+        self.response = self.client.delete('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_204_NO_CONTENT)
+        
+    def test_api_can_not_delete_instrutor(self):
+        self.client.logout()
+        self.response = self.client.delete('{}{}/'.format(self.url, 1), format='json')
+        self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
