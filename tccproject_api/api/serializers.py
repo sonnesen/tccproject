@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from api.models import Categoria, Unidade, Atividade, Arquivo
+from api.models import Categoria, Unidade, Atividade, Arquivo, Avaliacao,\
+    Questao, Alternativa
 from api.models import Curso, Instrutor
 
 
@@ -33,13 +34,6 @@ class UnidadeSerializer(serializers.ModelSerializer):
         fields = ('id', 'titulo', 'curso')
         
          
-class ArquivoSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Arquivo
-        fields = ('uri', 'tipo')
-                 
-                 
 class AtividadeSerializer(serializers.ModelSerializer):
     
     arquivo = ArquivoSerializer(many=False)
@@ -73,29 +67,34 @@ class AtividadeSerializer(serializers.ModelSerializer):
         return instance
         
         
+class ArquivoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Arquivo
+        fields = ('uri', 'tipo')
            
            
-# class AvaliacaoSerializer(serializers.ModelSerializer):
-#     atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-#     
-#     class Meta:
-#         model = Avaliacao
-#         fields = ('id', 'atividade')        
-#         
-#         
-# class QuestaoSerializer(serializers.ModelSerializer):
-#     atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-#     
-#     class Meta:
-#         model = Questao
-#         fields = ('id', 'atividade')        
-#         
-#         
-# class AlternativaSerializer(serializers.ModelSerializer):
-#     atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-#     
-#     class Meta:
-#         model = Alternativa
-#         fields = ('id', 'atividade')        
+class AvaliacaoSerializer(serializers.ModelSerializer):
+    atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+     
+    class Meta:
+        model = Avaliacao
+        fields = ('id', 'atividade')        
+         
+         
+class QuestaoSerializer(serializers.ModelSerializer):
+    atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+     
+    class Meta:
+        model = Questao
+        fields = ('id', 'atividade')        
+         
+         
+class AlternativaSerializer(serializers.ModelSerializer):
+    atividade = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+     
+    class Meta:
+        model = Alternativa
+        fields = ('id', 'atividade')        
 
 

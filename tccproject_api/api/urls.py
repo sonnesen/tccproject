@@ -11,8 +11,10 @@ router.register(r'categorias', views.CategoriaViewSet)
 router.register(r'instrutores', views.InstrutorViewSet)
 router.register(r'unidades', views.UnidadeViewSet)
 router.register(r'atividades', views.AtividadeViewSet)
-# router.register(r'videos', views.VideoAulaViewSet)
-# router.register(r'materiais', views.MaterialComplementarViewSet)
+router.register(r'arquivos', views.ArquivoViewSet)
+router.register(r'avaliacoes', views.AvaliacaoViewSet)
+router.register(r'questoes', views.QuestaoViewSet)
+router.register(r'alternativas', views.AlternativaViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [

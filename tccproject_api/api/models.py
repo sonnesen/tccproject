@@ -4,8 +4,8 @@ from django.db import models
 class Curso(models.Model):
     titulo = models.CharField('Título', max_length=100)
     criado_em = models.DateField('Data de criação', auto_now=True)
-    categoria = models.ForeignKey('Categoria', related_name='api', on_delete=models.CASCADE)
-    instrutor = models.ForeignKey('Instrutor', related_name='api', on_delete=models.CASCADE)
+    categoria = models.ForeignKey('Categoria', related_name='api', on_delete=models.SET_NULL, null=True)
+    instrutor = models.ForeignKey('Instrutor', related_name='api', on_delete=models.SET_NULL, null=True)
     palavras_chave = models.CharField('Palavras-Chave', max_length=100, null=True)
         
     def __str__(self):
@@ -53,7 +53,7 @@ class Unidade(models.Model):
     
 class Atividade(models.Model):
     titulo = models.CharField('Título', max_length=100)
-    unidade = models.ForeignKey('Unidade', related_name='atividades', on_delete=models.CASCADE, null=True)
+    unidade = models.ForeignKey('Unidade', related_name='atividades', on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.titulo
@@ -64,7 +64,7 @@ class Atividade(models.Model):
 
 class Arquivo(models.Model):
     uri = models.URLField(max_length=2000)
-    atividade = models.OneToOneField('Atividade', related_name='arquivo', on_delete=models.CASCADE)
+    atividade = models.OneToOneField('Atividade', related_name='arquivo', on_delete=models.SET_NULL, null=True)
     
     TIPOS = (
         (1, 'Vídeo'),
@@ -78,14 +78,14 @@ class Arquivo(models.Model):
        
         
 class Avaliacao(models.Model):
-    unidade = models.ForeignKey('Unidade', related_name='avaliacoes', on_delete=models.CASCADE, null=True)
+    unidade = models.ForeignKey('Unidade', related_name='avaliacoes', on_delete=models.SET_NULL, null=True)
      
     class Meta:
         db_table = 'avaliacao'
 
 class Questao(models.Model):
     enunciado = models.TextField(max_length=500)
-    avaliacao = models.ForeignKey('Avaliacao', related_name='questoes', on_delete=models.CASCADE)
+    avaliacao = models.ForeignKey('Avaliacao', related_name='questoes', on_delete=models.SET_NULL, null=True)
     
     class Meta:
         db_table = 'questao'
@@ -94,7 +94,7 @@ class Questao(models.Model):
 class Alternativa(models.Model):
     descricao = models.TextField(max_length=500)
     justificativa = models.TextField(max_length=500)
-    questao = models.OneToOneField('Questao', related_name='alternativa', on_delete=models.CASCADE)
+    questao = models.OneToOneField('Questao', related_name='alternativa', on_delete=models.SET_NULL, null=True)
     correta = models.BooleanField(default=False)
     
     class Meta:
