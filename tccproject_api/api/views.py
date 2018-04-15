@@ -4,8 +4,9 @@ from api.models import Curso, Categoria, Instrutor, Unidade, Atividade, Arquivo,
     Avaliacao, Questao, Alternativa
 from api.permissions import IsAdminOrReadOnly
 from api.serializers import CursoSerializer, CategoriaSerializer, \
-    InstrutorSerializer, UnidadeSerializer, AtividadeSerializer,\
-    ArquivoSerializer
+    InstrutorSerializer, UnidadeSerializer, AtividadeSerializer, \
+    ArquivoSerializer, AvaliacaoSerializer, QuestaoSerializer, \
+    AlternativaSerializer
 
 
 class CursoViewSet(viewsets.ModelViewSet):
@@ -18,6 +19,7 @@ class CursoViewSet(viewsets.ModelViewSet):
     serializer_class = CursoSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)
+
     
 class CategoriaViewSet(viewsets.ModelViewSet):
     """
@@ -53,6 +55,7 @@ class UnidadeViewSet(viewsets.ModelViewSet):
     serializer_class = UnidadeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)
+
      
 class AtividadeViewSet(viewsets.ModelViewSet):
     """
@@ -113,6 +116,3 @@ class AlternativaViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
-
-
-
