@@ -6,15 +6,15 @@ from api import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'cursos', views.CursoViewSet)
-router.register(r'categorias', views.CategoriaViewSet)
-router.register(r'instrutores', views.InstrutorViewSet)
-router.register(r'unidades', views.UnidadeViewSet)
-router.register(r'atividades', views.AtividadeViewSet)
-router.register(r'arquivos', views.ArquivoViewSet)
-router.register(r'avaliacoes', views.AvaliacaoViewSet)
-router.register(r'questoes', views.QuestaoViewSet)
-router.register(r'alternativas', views.AlternativaViewSet)
+router.register(r'courses', views.CourseViewSet)
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'instructors', views.InstructorViewSet)
+router.register(r'units', views.UnitViewSet)
+router.register(r'activities', views.ActivityViewSet)
+router.register(r'resources', views.ResourceViewSet)
+router.register(r'tests', views.TestViewSet)
+router.register(r'questions', views.QuestionViewSet)
+router.register(r'alternatives', views.AlternativeViewSet)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [

@@ -3,63 +3,63 @@ from django.test.testcases import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.models import Unidade, Curso, Categoria, Instrutor
+from api.models import Unit, Course, Category, Instructor
 
 
-class UnidadeViewTestCase(TestCase):
+class UnitViewTestCase(TestCase):
     
     def setUp(self):
-        self.categoria = Categoria.objects.create(nome='Programação')
-        self.instrutor = Instrutor.objects.create(nome='Fulano de Tal',
-                                                  contato='fulano@test.com',
-                                                  resumo='Lorem ipsum dolor sit amet, te quo illum iuvaret corpora.')
+        self.category = Category.objects.create(name='Programming')
+        self.instructor = Instructor.objects.create(name='John Doo',
+                                                    contact='john@doo.com',
+                                                    about='Lorem ipsum dolor sit amet, te quo illum iuvaret corpora.')
         
-        self.curso = Curso.objects.create(titulo='Java parte 1: Primeiros passos',
-                                          categoria=self.categoria,
-                                          instrutor=self.instrutor,
-                                          palavras_chave='java iniciante')
+        self.course = Course.objects.create(title='Java:First steps',
+                                            category=self.category,
+                                            instructor=self.instructor,
+                                            keywords='java beginner')
         
-        self.unidade = Unidade.objects.create(titulo='Descrição',
-                                              curso=self.curso)
+        self.unit = Unit.objects.create(title='Description',
+                                        course=self.course)
         
         self.user = User.objects.create_superuser('admin', 'admin@admin.com', 'admin@123')
         self.client = APIClient()
         self.client.force_authenticate(self.user)
-        self.url = '/api/v1/unidades/'
+        self.url = '/api/v1/units/'
         
-    def test_api_can_get_all_unidade(self):
+    def test_api_can_get_all_units(self):
         self.response = self.client.get(self.url, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
         
-    def test_api_can_create_unidade(self):
+    def test_api_can_create_unit(self):
         self.data = {
-            'titulo': 'Unidade 1',
-            'curso': self.curso.id
+            'title': 'Unit 1',
+            'course': self.course.id
         }
         self.response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
         
-    def test_api_can_not_create_unidade(self):
+    def test_api_can_not_create_unit(self):
         self.client.logout()
         self.data = {
-            'titulo': 'Unidade 1',
-            'curso': self.curso.id
+            'title': 'Unit 1',
+            'course': self.course.id
         }        
         self.response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
         
-    def test_api_can_get_unidade(self):
+    def test_api_can_get_unit(self):
         self.response = self.client.get('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)    
         
-    def test_api_can_not_get_unidade(self):
+    def test_api_can_not_get_unit(self):
         self.response = self.client.get('{}{}/'.format(self.url, 9999), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_404_NOT_FOUND)
     
-    def test_api_can_update_unidade(self):
+    def test_api_can_update_unit(self):
         self.data = {
-            'titulo': 'Nova Unidade 1',
-            'curso': self.curso.id
+            'title': 'Nova Unit 1',
+            'course': self.course.id
         }        
         self.response = self.client.put(
             '{}{}/'.format(self.url, 1),
@@ -67,11 +67,11 @@ class UnidadeViewTestCase(TestCase):
             format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)       
         
-    def test_api_can_not_update_unidade(self):
+    def test_api_can_not_update_unit(self):
         self.client.logout()
         self.data = {
-            'titulo': 'Nova Unidade 1',
-            'curso': self.curso.id
+            'title': 'Nova Unit 1',
+            'course': self.course.id
         }        
         self.response = self.client.put(
             '{}{}/'.format(self.url, 1),
@@ -79,11 +79,11 @@ class UnidadeViewTestCase(TestCase):
             format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
         
-    def test_api_can_delete_unidade(self):
+    def test_api_can_delete_unit(self):
         self.response = self.client.delete('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_204_NO_CONTENT)
         
-    def test_api_can_not_delete_unidade(self):
+    def test_api_can_not_delete_unit(self):
         self.client.logout()
         self.response = self.client.delete('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)

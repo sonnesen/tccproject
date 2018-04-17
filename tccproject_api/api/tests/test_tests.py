@@ -3,64 +3,80 @@ from django.test.testcases import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from api.models import Categoria
+from api.models import Test, Unit, Course, Category, Instructor
 
 
-class CategoriaViewTestCase(TestCase):
+class TestViewTestCase(TestCase):
     
     def setUp(self):
-        Categoria.objects.create(nome='Mobile')
-        
+        self.category = Category.objects.create(name='Category')
+        self.instructor = Instructor.objects.create(name='Instructor', contact='contact@contact.com', about='About')
+        self.course = Course.objects.create(title='Course', category=self.category, instructor=self.instructor)
+        self.unit = Unit.objects.create(title='Unit', course=self.course)
+        self.test = Test.objects.create(title='Avaliação Objetiva de Fixação', unit=self.unit)
+                
         self.user = User.objects.create_superuser('admin', 'admin@admin.com', 'admin@123')
         self.client = APIClient()
         self.client.force_authenticate(self.user)
-        self.url = '/api/v1/categorias/'
+        self.url = '/api/v1/tests/'
         
-    def test_api_can_get_all_categoria(self):
+    def test_api_can_get_all_tests(self):
         self.response = self.client.get(self.url, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)
         
-    def test_api_can_create_categoria(self):
-        self.data = {'nome': 'Programação'}
-        self.response = self.client.post(self.url, self.data, format='json')
+    def test_api_can_create_test(self):
+        self.data = {
+            'title': 'Nova avaliação objetiva de fixação',
+            'unit': self.unit.id
+        }
+        self.response = self.client.post(self.url, data=self.data, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
         
-    def test_api_can_not_create_categoria(self):
+    def test_api_can_not_create_test(self):
         self.client.logout()
-        self.data = {'nome': 'Programação'}
+        self.data = {
+            'title': 'Nova avaliação objetiva de fixação',
+            'unit': self.unit.id
+        }
         self.response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
         
-    def test_api_can_get_categoria(self):
+    def test_api_can_get_test(self):
         self.response = self.client.get('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_200_OK)    
         
-    def test_api_can_not_get_categoria(self):
+    def test_api_can_not_get_test(self):
         self.response = self.client.get('{}{}/'.format(self.url, 9999), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_404_NOT_FOUND)
     
-    def test_api_can_update_categoria(self):        
-        self.data = {'nome': 'Dispositivos Móveis'}
+    def test_api_can_update_test(self):
+        self.data = {
+            'title': 'Nova avaliação objetiva de fixação ....',
+            'unit': self.unit.id
+        }                
         self.response = self.client.put(
             '{}{}/'.format(self.url, 1),
             data=self.data,
             format='json')
-        self.assertEqual(self.response.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.response.status_code, status.HTTP_200_OK)       
         
-    def test_api_can_not_update_categoria(self):
-        self.client.logout()        
-        self.data = {'nome': 'Dispositivos Móveis'}
+    def test_api_can_not_update_test(self):
+        self.client.logout()
+        self.data = {
+            'title': 'Nova avaliação objetiva de fixação ....',
+            'unit': self.unit.id
+        }
         self.response = self.client.put(
             '{}{}/'.format(self.url, 1),
             data=self.data,
             format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
         
-    def test_api_can_delete_categoria(self):
+    def test_api_can_delete_test(self):
         self.response = self.client.delete('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_204_NO_CONTENT)
         
-    def test_api_can_not_delete_categoria(self):
+    def test_api_can_not_delete_test(self):
         self.client.logout()
         self.response = self.client.delete('{}{}/'.format(self.url, 1), format='json')
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)

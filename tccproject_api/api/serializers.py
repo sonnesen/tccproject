@@ -1,70 +1,70 @@
 from rest_framework import serializers
 
-from api.models import Categoria, Unidade, Atividade, Arquivo, Avaliacao,\
-    Questao, Alternativa
-from api.models import Curso, Instrutor
+from api.models import Category, Unit, Activity, Resource, Test,\
+    Question, Alternative
+from api.models import Course, Instructor
 
 
-class CursoSerializer(serializers.ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
         
     class Meta:
-        model = Curso
-        fields = ('id', 'titulo', 'criado_em', 'categoria', 'instrutor', 'palavras_chave')
-        read_only_fields = ('criado_em',)
+        model = Course
+        fields = ('id', 'title', 'created_at', 'category', 'instructor', 'keywords')
+        read_only_fields = ('created_at',)
         
 
-class CategoriaSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Categoria
-        fields = ('id', 'nome')
+        model = Category
+        fields = ('id', 'name')
          
  
-class InstrutorSerializer(serializers.ModelSerializer):
+class InstructorSerializer(serializers.ModelSerializer):
         
     class Meta:
-        model = Instrutor
-        fields = ('id', 'nome', 'contato', 'resumo')
+        model = Instructor
+        fields = ('id', 'name', 'contact', 'about')
          
          
-class UnidadeSerializer(serializers.ModelSerializer):
+class UnitSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Unidade
-        fields = ('id', 'titulo', 'curso')
+        model = Unit
+        fields = ('id', 'title', 'course')
         
         
-class ArquivoSerializer(serializers.ModelSerializer):
+class ResourceSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Arquivo
-        fields = ('id', 'tipo', 'uri', 'atividade')
+        model = Resource
+        fields = ('id', 'type', 'uri', 'activity')
         
                  
-class AtividadeSerializer(serializers.ModelSerializer):
+class ActivitySerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Atividade
-        fields = ('id', 'titulo', 'unidade') 
+        model = Activity
+        fields = ('id', 'title', 'unit') 
            
            
-class AvaliacaoSerializer(serializers.ModelSerializer):
+class TestSerializer(serializers.ModelSerializer):
      
     class Meta:
-        model = Avaliacao
-        fields = ('id', 'unidade')        
+        model = Test
+        fields = ('id', 'unit')        
          
          
-class QuestaoSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
      
     class Meta:
-        model = Questao
-        fields = ('id', 'enunciado', 'avaliacao')
+        model = Question
+        fields = ('id', 'statement', 'test')
          
          
-class AlternativaSerializer(serializers.ModelSerializer):
+class AlternativeSerializer(serializers.ModelSerializer):
      
     class Meta:
-        model = Alternativa
-        fields = ('id', 'descricao', 'justificativa', 'questao', 'correta')        
+        model = Alternative
+        fields = ('id', 'description', 'answer', 'question', 'is_correct_answer')        
 

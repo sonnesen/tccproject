@@ -1,118 +1,118 @@
 from rest_framework import viewsets, permissions
 
-from api.models import Curso, Categoria, Instrutor, Unidade, Atividade, Arquivo,\
-    Avaliacao, Questao, Alternativa
+from api.models import Course, Category, Instructor, Unit, Activity, Resource,\
+    Test, Question, Alternative
 from api.permissions import IsAdminOrReadOnly
-from api.serializers import CursoSerializer, CategoriaSerializer, \
-    InstrutorSerializer, UnidadeSerializer, AtividadeSerializer, \
-    ArquivoSerializer, AvaliacaoSerializer, QuestaoSerializer, \
-    AlternativaSerializer
+from api.serializers import CourseSerializer, CategorySerializer, \
+    InstructorSerializer, UnitSerializer, ActivitySerializer, \
+    ResourceSerializer, TestSerializer, QuestionSerializer, \
+    AlternativeSerializer
 
 
-class CursoViewSet(viewsets.ModelViewSet):
+class CourseViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
     
-    queryset = Curso.objects.all()
-    serializer_class = CursoSerializer
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)
 
     
-class CategoriaViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Categoria.objects.all()
-    serializer_class = CategoriaSerializer
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)
      
     
-class InstrutorViewSet(viewsets.ModelViewSet):
+class InstructorViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Instrutor.objects.all()
-    serializer_class = InstrutorSerializer
+    queryset = Instructor.objects.all()
+    serializer_class = InstructorSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
  
-class UnidadeViewSet(viewsets.ModelViewSet):
+class UnitViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Unidade.objects.all()
-    serializer_class = UnidadeSerializer
+    queryset = Unit.objects.all()
+    serializer_class = UnitSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)
 
      
-class AtividadeViewSet(viewsets.ModelViewSet):
+class ActivityViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Atividade.objects.all()
-    serializer_class = AtividadeSerializer
+    queryset = Activity.objects.all()
+    serializer_class = ActivitySerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
 
-class ArquivoViewSet(viewsets.ModelViewSet):
+class ResourceViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Arquivo.objects.all()
-    serializer_class = ArquivoSerializer
+    queryset = Resource.objects.all()
+    serializer_class = ResourceSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
 
-class AvaliacaoViewSet(viewsets.ModelViewSet):
+class TestViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Avaliacao.objects.all()
-    serializer_class = AvaliacaoSerializer
+    queryset = Test.objects.all()
+    serializer_class = TestSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
 
-class QuestaoViewSet(viewsets.ModelViewSet):
+class QuestionViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Questao.objects.all()
-    serializer_class = QuestaoSerializer
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
 
-class AlternativaViewSet(viewsets.ModelViewSet):
+class AlternativeViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
      
-    queryset = Alternativa.objects.all()
-    serializer_class = AlternativaSerializer
+    queryset = Alternative.objects.all()
+    serializer_class = AlternativeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsAdminOrReadOnly)    
      
