@@ -58,7 +58,7 @@ class UnitViewTestCase(TestCase):
     
     def test_api_can_update_unit(self):
         self.data = {
-            'title': 'Nova Unit 1',
+            'title': 'New Unit 1',
             'course': self.course.id
         }        
         self.response = self.client.put(
@@ -70,7 +70,7 @@ class UnitViewTestCase(TestCase):
     def test_api_can_not_update_unit(self):
         self.client.logout()
         self.data = {
-            'title': 'Nova Unit 1',
+            'title': 'New Unit 1',
             'course': self.course.id
         }        
         self.response = self.client.put(
