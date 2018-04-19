@@ -4,9 +4,11 @@ from django.urls import path
 
 from accounts import views as accounts_views
 from courses import views
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
+    path('', RedirectView.as_view(pattern_name='home', permanent=False)),
     path('ui/', views.HomePageView.as_view(), name='home'),
     path('signup/', accounts_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
