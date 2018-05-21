@@ -6,7 +6,8 @@ from units.models import Unit
 
 class UnitInlineModelAdmin(admin.TabularInline):
     model = Unit
-    extra = 1
+    min_num = 1
+    extra = 0
     
     
 class CourseModelAdmin(admin.ModelAdmin):
