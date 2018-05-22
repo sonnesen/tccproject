@@ -1,29 +1,27 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-<div class="row">
-	{% for course in courses %}
-	<div class="col-lg-3 col-md-6">
-	    <div class="panel panel-primary">
-	        <div class="panel-heading">
-	            <div class="row">
-	                <div class="col-xs-2">
-	                    <i class="fa fa-book fa-3x"></i>
-	                </div>
-	                <div class="col-xs-9 text-justify">
-	                    {{ course }}
-	                </div>
-	            </div>
-	        </div>
-	        <a href="{% url 'courses:detail' course.id %}">
-	            <div class="panel-footer">
-	                <span class="pull-left">View Details</span>
-	                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-	                <div class="clearfix"></div>
-	            </div>
-	        </a>
-	    </div>
+
+{% for course in courses %}
+<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+	<div class="card h-100">
+		<a href="#">
+			{% if course.image %}
+			<img class="card-img-top" src="{{ course.image.url }}" alt="">
+			{% else %}
+			<img class="card-img-top" src="http://placehold.it/700x400" alt="">
+			{% endif %}
+		</a>
+		<div class="card-body">
+			<h4 class="card-title">
+				<a href="#">{{ course.title }}</a>
+			</h4>
+			<p class="card-text">{{ course.description }}</p>
+		</div>
 	</div>
-	{% endfor %}
 </div>
+{% endfor %}
+
 {% endblock %}

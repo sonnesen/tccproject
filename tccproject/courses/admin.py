@@ -3,7 +3,7 @@ from django.contrib import admin
 
 
 class CourseModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'created_at', 'category', 'instructor', 'keyword_list')
+    list_display = ('id', 'title', 'created_at', 'category', 'instructor', 'keyword_list', 'description', 'image')
     autocomplete_fields = ('category', 'instructor')
     readonly_fields = ('created_at',)
     list_filter = ('title', 'category', 'instructor')

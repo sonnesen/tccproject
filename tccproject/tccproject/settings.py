@@ -146,3 +146,6 @@ REST_FRAMEWORK = {
 # AUTH_USER_MODEL = 'accounts.User'
 
 TAGGIT_CASE_INSENSITIVE = True
+
+MEDIA_ROOT = 'media'
+MEDIA_URL = '/media/'
