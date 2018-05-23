@@ -10,8 +10,8 @@ class Course(models.Model):
     created_at = models.DateField(auto_now=True)
     category = models.ForeignKey(Category, related_name='categories', on_delete=models.CASCADE)
     instructor = models.ForeignKey(Instructor, related_name='instructors', on_delete=models.SET_NULL, blank=True, null=True)
-    description = models.TextField(max_length=100)
-    image = models.ImageField(upload_to='img/courses', null=True, blank=True)    
+    description = models.TextField(max_length=200)
+    image = models.ImageField(upload_to='images/courses', null=True, blank=True)    
     keywords = TaggableManager('keywords')
         
     def __str__(self):

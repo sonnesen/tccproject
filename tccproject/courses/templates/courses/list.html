@@ -1,27 +1,32 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
-{% load static %}
+{% load static %} 
 
-{% block content %}
+{% block css %}
+<link href="{% static 'courses/css/style.css' %}" rel="stylesheet">
+{% endblock %} 
 
+{% block content %} 
 {% for course in courses %}
-<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-	<div class="card h-100">
-		<a href="#">
-			{% if course.image %}
-			<img class="card-img-top" src="{{ course.image.url }}" alt="">
-			{% else %}
-			<img class="card-img-top" src="http://placehold.it/700x400" alt="">
-			{% endif %}
-		</a>
+<div class="col-lg-3 col-md-6 mb-4">
+	<div class="card">
+		{% if course.image %}
+		<img class="card-img-top" src="{{ course.image.url }}" alt="">
+		{% else %}
+		<img class="card-img-top" src="http://placehold.it/500x325" alt="">
+		{% endif %}
 		<div class="card-body">
-			<h4 class="card-title">
-				<a href="#">{{ course.title }}</a>
-			</h4>
+			<h4 class="card-title">{{ course.title }}</h4>
 			<p class="card-text">{{ course.description }}</p>
+		</div>
+		<div class="card-footer">
+			<a href="#" class="btn btn-primary">Matricule-se</a>
 		</div>
 	</div>
 </div>
-{% endfor %}
+{% endfor %} 
+{% endblock %}
 
+{% block pagination %}
+{% include 'pagination.html' %}
 {% endblock %}
