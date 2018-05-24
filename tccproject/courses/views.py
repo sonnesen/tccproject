@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 
 
 class CourseListView(ListView):
+    paginate_by = 10
     model = Course
     template_name = 'courses/list.html'
     context_object_name = 'courses'
