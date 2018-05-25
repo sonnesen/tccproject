@@ -7,23 +7,22 @@ from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_swagger.views import get_swagger_view
 
-from activities.api.viewsets import ActivityViewSet
 from categories.api.viewsets import CategoryViewSet
 from courses import urls as courses_urls
 from courses.api.viewsets import CourseViewSet
 from dashboard import urls as dashboard_urls
+from documents.api.viewsets import DocumentViewSet
 from instructors.api.viewsets import InstructorViewSet
-from resources.api.viewsets import ResourceViewSet
 from units.api.viewsets import UnitViewSet
-
+from videos.api.viewsets import VideoViewSet
 
 router = routers.SimpleRouter()
 router.register('instructors', InstructorViewSet)
 router.register('categories', CategoryViewSet)
 router.register('courses', CourseViewSet)
 router.register('units', UnitViewSet)
-router.register('activities', ActivityViewSet)
-router.register('resources', ResourceViewSet)
+router.register('videos', VideoViewSet)
+router.register('documents', DocumentViewSet)
 
 schema_view = get_swagger_view(title='Pastebin API')
 

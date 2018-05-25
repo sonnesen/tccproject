@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from activities.models import Activity
 from units.models import Unit
+from videos.models import Video
 
 
-class ActivitySerializer(ModelSerializer):
+class VideoSerializer(ModelSerializer):
     unit = serializers.PrimaryKeyRelatedField(queryset=Unit.objects.all())
     
     class Meta:
-        model = Activity
+        model = Video
         fields = ('__all__')

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from categories.api.serializers import CategorySerializer
 from categories.models import Category
 from courses.models import Course
 from instructors.models import Instructor
@@ -32,6 +31,4 @@ class CourseSerializer(ModelSerializer):
         course.save()
         
         return course
-        
-        
         
