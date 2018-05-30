@@ -1,7 +1,6 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
 from django.urls import reverse_lazy
 
@@ -20,6 +19,13 @@ class InstructorListView(BaseView, ListView):
     model = Instructor
 
 
+class InstructorCreateView(BaseView, CreateView):
+    model = Instructor
+    template_name_suffix = '_create'
+    fields = '__all__'
+    success_url = reverse_lazy('instructors:instructor_list')
+
+
 class InstructorDetailView(BaseView, DetailView):
     model = Instructor
 
@@ -32,4 +38,5 @@ class InstructorUpdateView(BaseView, UpdateView):
 
 
 class InstructorDeleteView(BaseView, DeleteView):
-    pass
+    model = Instructor
+    success_url = reverse_lazy('instructors:instructor_list')

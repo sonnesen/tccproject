@@ -10,21 +10,23 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Instructor Detail</h3>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <span class="form-control">{{ instructor.name }}</span>
+            <fieldset disabled>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input class="form-control" value="{{ instructor.name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="email" class="form-control" value="{{ instructor.contact }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="about">About</label>
+                        <textarea class="form-control" style="resize: none" rows="3">{{ instructor.about }}</textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="contact">Contact</label>
-                    <span class="form-control">{{ instructor.contact }}</span>
-                </div>
-                <div class="form-group">
-                    <label for="about">About</label>
-                    <span class="form-control">{{ instructor.about }}</span>
-                </div>
-            </div>
+            </fieldset>
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="text-right">
