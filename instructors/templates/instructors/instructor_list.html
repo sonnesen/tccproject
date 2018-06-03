@@ -13,12 +13,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-            	<div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
-                    Success alert preview. This alert is dismissable.
-                </div>
-                <table id="instructors_table" class="table table-bordered table-hover">
+                <table id="instructors_table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -26,17 +21,6 @@
                             <th>About</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for instructor in instructor_list %}
-                        <tr>
-                            <td>
-                                <a href="{% url 'instructors:instructor_detail' instructor.pk %}">{{ instructor.name }}</a>
-                            </td>
-                            <td>{{ instructor.contact }}</td>
-                            <td>{{ instructor.about }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
                     <tfoot>
                         <tr>
                             <th>Name</th>
@@ -47,5 +31,49 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+{% endblock %}
 
-        {% endblock %}
+{% block javascript %}
+<script>
+var table = $('#instructors_table').DataTable({
+    'pagingType': 'full_numbers',
+    'paging': true,
+    'processing': true,
+    'lengthChange': true,
+    'searching': true,
+    'ordering': true,
+    'info': true,
+    'autoWidth': false,
+    'serverSide': true,
+    'order': [[0,'asc']],
+    'ajax': {
+        'url': "{% url 'instructors:instructor_list' %}?type=json"
+    },
+    'columns': [
+        {
+            'data': 'name',
+            'searchable': true,
+            'render': function(data, type, row, meta) {
+                if (type === 'display') {
+                    var url = "{% url 'instructors:instructor_edit' 12345 %}".replace(/12345/, row.id);
+                    data = '<a href=' + url + '>' + data + '</a>';
+                }
+                return data;
+            }
+        },
+        {'data': 'contact', 'searchable': false},
+        {'data': 'about', 'searchable': false}
+    ]
+})
+
+$('.dataTables_filter input')
+    .unbind()
+    .bind('keyup change', function(e) {
+        if (e.keyCode == 13 || this.value == "") {
+            table.search(this.value).draw();
+        }
+    });    
+</script>
+{% endblock %}

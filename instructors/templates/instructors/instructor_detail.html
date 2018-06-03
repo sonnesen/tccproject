@@ -36,13 +36,39 @@
                     <a href="{% url 'instructors:instructor_edit' instructor.pk %}" class="btn btn-default">
                         <i class="fa fa-pencil"></i> Edit
                     </a>
-                    <a href="{% url 'instructors:instructor_delete' instructor.pk %}" class="btn btn-default">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
                         <i class="fa fa-trash"></i> Remove
-                    </a>
+                    </button>
                 </div>
             </div>
             <!-- /.box-footer -->
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the selected instructor?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, take me back</button>
+                <form action="{% url 'instructors:instructor_delete' instructor.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 {% endblock content %}
