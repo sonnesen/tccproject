@@ -10,6 +10,7 @@ from rest_framework_swagger.views import get_swagger_view
 from categories.api.viewsets import CategoryViewSet
 from courses import urls as courses_urls
 from instructors import urls as instructors_urls
+from categories import urls as categories_urls
 from courses.api.viewsets import CourseViewSet
 from dashboard import urls as dashboard_urls
 from documents.api.viewsets import DocumentViewSet
@@ -35,6 +36,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('courses/', include(courses_urls, namespace='courses')),
     path('instructors/', include(instructors_urls, namespace='instructores')),
+    path('categories/', include(categories_urls, namespace='categories')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -197,7 +197,7 @@ desired effect
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <li class="user-body">                
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -264,24 +264,18 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active">
+        <li>
+            <a href="{% url 'categories:category_list' %}">
+                <i class="fa fa-link"></i>
+                <span>Categories</span>
+            </a>
+        </li>
+        <li>
             <a href="{% url 'instructors:instructor_list' %}">
                 <i class="fa fa-link"></i>
                 <span>Instructors</span>
             </a>
-        </li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
+        </li>        
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -405,6 +399,12 @@ desired effect
 
 <!-- jQuery 3 -->
 <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'vendor/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <!-- DataTables -->
@@ -416,9 +416,10 @@ desired effect
 <!-- AdminLTE App -->
 <script src="{% static 'js/adminlte.min.js' %}"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
+<!-- Slimscroll -->
+<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'vendor/fastclick/lib/fastclick.js' %}"></script>
 
 <script>
     $.notifyDefaults({

@@ -93,7 +93,7 @@ class InstructorDetailView(BaseView, DetailView):
 
 class InstructorUpdateView(SuccessMessageMixin, BaseView, UpdateView):
     model = Instructor
-    fields = ['name', 'contact', 'about']
+    fields = '__all__' #['name', 'contact', 'about']
     template_name_suffix = '_update'
     success_url = reverse_lazy('instructors:instructor_list')
     success_message = 'Instructor %(name)s was updated successfully'
