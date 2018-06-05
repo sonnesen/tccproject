@@ -49,7 +49,7 @@ var table = $('#instructors_table').DataTable({
     'serverSide': true,
     'order': [[0,'asc']],
     'ajax': {
-        'url': "{% url 'instructors:instructor_list' %}?type=json"
+        'url': "/api/v1/instructors"
     },
     'columns': [
         {
