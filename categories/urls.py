@@ -4,7 +4,7 @@ from categories.views import (CategoryListView, CategoryCreateView,
                               CategoryDetailView, CategoryUpdateView,
                               CategoryDeleteView)
 
-app_name = 'categorys'
+app_name = 'categories'
 
 urlpatterns = [
     path('', CategoryListView.as_view(),
