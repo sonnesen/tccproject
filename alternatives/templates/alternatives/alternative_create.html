@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block breadcrumb %}
 <li>
-    <a href="{% url 'categories:category_list' %}">Categories</a>
+    <a href="{% url 'alternatives:alternative_list' %}">Categories</a>
 </li>
 <li class="active">New</li>
 {% endblock breadcrumb %} {% block content %}
@@ -11,16 +11,16 @@
             {% csrf_token %}
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">New Category</h3>
+                    <h3 class="box-title">New Alternative</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group {% if form.name.errors %} has-error {% endif %}">
-                        <label for="name">Name</label>
-                        <input class="form-control" name="name" placeholder="Name" value="{{ form.name.value|default:'' }}"> 
-                        {% if form.name.errors %} 
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" placeholder="Description">{{ form.description.value|default:'' }}</textarea> 
+                        {% if form.description.errors %}
                             {% for error in form.name.errors %}
-                                <span class="help-block">{{ error }}</span>
+                            <span class="help-block">{{ error }}</span>
                             {% endfor %} 
                         {% endif %}
                     </div>
@@ -29,7 +29,7 @@
                 <div class="box-footer">
                     <div class="text-right">
                         <div class="btn-group">
-                            <a href="{% url 'categories:category_list' %}" class="btn btn-default"> Cancel</a>
+                            <a href="{% url 'alternatives:alternative_list' %}" class="btn btn-default"> Cancel</a>
                             <button type="submit" name="saveandnew" value="Save and New" class="btn btn-default">Save and New</button>
                             <button type="submit" name="save" value="Save" class="btn btn-primary">Save</button>
                         </div>

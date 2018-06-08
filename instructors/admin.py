@@ -7,5 +7,5 @@ class InstructorModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'contact', 'about')
     search_fields = ('name',)
 
-    
+
 admin.site.register(Instructor, InstructorModelAdmin)

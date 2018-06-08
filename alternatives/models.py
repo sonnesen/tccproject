@@ -8,4 +8,4 @@ class Alternative(models.Model):
     question = models.ForeignKey(Question, related_name='alternatives', on_delete=models.CASCADE, null=False)
     is_correct = models.BooleanField(default=False)
     
-    
+
