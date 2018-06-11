@@ -57,7 +57,7 @@ var table = $('#courses_table').DataTable({
     'serverSide': true,
     'order': [[0,'asc']],
     'ajax': {
-        'url': "{% url 'courses:course_list' %}?type=json"
+        'url': "/api/v1/courses"
     },
     'columns': [
         {
@@ -72,8 +72,8 @@ var table = $('#courses_table').DataTable({
             }
         },
         {'data': 'created_at', 'searchable': false},
-        {'data': 'category_id', 'searchable': false},
-        {'data': 'instructor_id', 'searchable': false},
+        {'data': 'category.name', 'searchable': false},
+        {'data': 'instructor.name', 'searchable': false},
         {'data': 'description', 'searchable': false},
         {'data': 'keywords', 'searchable': false},
         {'data': 'image', 'searchable': false}
