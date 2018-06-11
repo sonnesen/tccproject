@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block breadcrumb %}
 <li>
-    <a href="{% url 'instructors:instructor_list' %}">Instructors</a>
+    <a href="{% url 'courses:course_list' %}">Courses</a>
 </li>
 <li class="active">Detail</li>
 {% endblock breadcrumb %} {% block content %}
@@ -8,32 +8,62 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Instructor Detail</h3>
+                <h3 class="box-title">Course Detail</h3>
             </div>
             <fieldset disabled>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input class="form-control" value="{{ instructor.name }}">
+                        <label>Name</label>
+                        <input class="form-control" value="{{ course.name }}">
                     </div>
                     <div class="form-group">
-                        <label for="contact">Contact</label>
-                        <input type="email" class="form-control" value="{{ instructor.contact }}">
+                        <label>Created At</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"
+                                    style="cursor:not-allowed;
+                                           opacity: 0.6"></i>
+                            </div>
+                            <input type="text" class="form-control"
+                                data-inputmask="'alias': 'dd/mm/yyyy'"
+                                data-mask
+                                value="{{ course.created_at }}">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="about">About</label>
-                        <textarea class="form-control" style="resize: none" rows="3">{{ instructor.about }}</textarea>
+                        <label>Category</label>
+                        <input class="form-control" name="category" value="{{ course.category }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Instructor</label>
+                        <input class="form-control" value="{{ course.instructor }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" style="resize: none"
+                            rows="6">{{ course.description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input class="form-control" value="{{ course.image }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Keywords</label>
+                        {% comment %}
+                        <input class="form-control"
+                            value="{{ course.keywords }}">
+                        {% endcomment %}
                     </div>
                 </div>
             </fieldset>
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="text-right">
-                    <a href="{% url 'instructors:instructor_list' %}" class="btn btn-primary">
+                    <a href="{% url 'courses:course_list' %}" class="btn btn-primary">
                         <i class="fa fa-chevron-left"></i> Return
                     </a>
-                    <a href="{% url 'instructors:instructor_edit' instructor.pk %}" class="btn btn-default">
+                    <a href="{% url 'courses:course_edit' course.pk %}" class="btn btn-default">
                         <i class="fa fa-pencil"></i> Edit
                     </a>
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
@@ -56,11 +86,11 @@
                 <h4 class="modal-title">Are you sure?</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the selected instructor?</p>
+                <p>Are you sure you want to delete the selected course?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, take me back</button>
-                <form action="{% url 'instructors:instructor_delete' instructor.pk %}" method="post">
+                <form action="{% url 'courses:course_delete' course.pk %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
                 </form>
@@ -72,3 +102,12 @@
 </div>
 
 {% endblock content %}
+
+{% block javascript %}
+<script>
+$(function() {
+	// $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
+	$('[data-mask]').inputmask();
+})
+</script>
+{% endblock %}
