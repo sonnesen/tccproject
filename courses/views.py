@@ -7,6 +7,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from courses.models import Course
+from django.forms.models import ModelForm
+from django.contrib.contenttypes import fields
 
 
 class BaseView(View):
@@ -41,22 +43,25 @@ class CourseCreateView(SuccessMessageMixin, BaseView, CreateView):
 class CourseDetailView(BaseView, DetailView):
     model = Course
 
-#     def get_queryset(self):
-#         queryset = Course.objects.all().prefetch_related('keywords')
-#         return queryset
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['keywords'] = ', '.join(t.name for t in self.object.keywords.all())
-#         return context
+class CourseForm(ModelForm):
 
+    class Meta:
+        model = Course
+        fields = ['name', 'category', 'instructor', 'keywords', 'description', 'image']
+                
+    def keywords_list(self):
+        tagfields = self.instance.keywords.all()
+        keywords_list = ', '.join(t.name for t in tagfields)
+        return keywords_list
+        
 
 class CourseUpdateView(SuccessMessageMixin, BaseView, UpdateView):
     model = Course
-    fields = '__all__'
     template_name_suffix = '_update'
     success_url = reverse_lazy('courses:course_list')
     success_message = 'Course %(name)s was updated successfully'
+    form_class = CourseForm    
 
     def post(self, request, *args, **kwargs):
         if request.POST.get('saveandnew'):

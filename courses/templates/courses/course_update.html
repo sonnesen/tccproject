@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
 <li>
-    <a href="{% url 'instructors:instructor_list' %}">Instructors</a>
+    <a href="{% url 'courses:course_list' %}">Courses</a>
 </li>
 <li class="active">Edit</li>
 {% endblock breadcrumb %} 
@@ -15,43 +15,80 @@
             {% csrf_token %}
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Instructor Edit</h3>
+                    <h3 class="box-title">Course Edit</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group {% if form.name.errors %} has-error {% endif %}">
                         <label for="name">Name</label>
-                        <input class="form-control" name="name" placeholder="Name" value="{{ form.name.value }}">
+                        <input class="form-control" name="name" 
+                            placeholder="Name" value="{{ form.name.value }}">
                         {% if form.name.errors %}
                             {% for error in form.name.errors %}
                                 <span class="help-block">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <div class="form-group {% if form.contact.errors %} has-error {% endif %}">
-                        <label for="contact">Contact</label>
-                        <input class="form-control" name="contact" placeholder="Contact" value="{{ form.contact.value }}">
-                        {% if form.contact.errors %}
-                            {% for error in form.contact.errors %}
+                    <div class="form-group {% if form.category.errors %} has-error {% endif %}">
+                        <label for="category">Category</label>
+                        <input class="form-control" name="category" 
+                            placeholder="Category" 
+                            value="{{ form.category.value }}">
+                        {% if form.category.errors %}
+                            {% for error in form.category.errors %}
                                 <span class="help-block">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <div class="form-group {% if form.about.errors %} has-error {% endif %}">
-                        <label for="about">About</label>
-                        <textarea class="form-control" style="resize: none" rows="3" name="about" placeholder="About the instructor">{{ form.about.value }}</textarea>
-                        {% if form.about.errors %}
-                            {% for error in form.about.errors %}
+                    <div class="form-group {% if form.instructor.errors %} has-error {% endif %}">
+                        <label for="instructor">Instructor</label>
+                        <input class="form-control" name="instructor" 
+                            placeholder="Instructor" 
+                            value="{{ form.instructor.value }}">
+                        {% if form.instructor.errors %}
+                            {% for error in form.instructor.errors %}
                                 <span class="help-block">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </div>
+                    <div class="form-group {% if form.description.errors %} has-error {% endif %}">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" style="resize: none" 
+                            rows="6" name="description" 
+                            placeholder="Description">{{ form.description.value }}
+                        </textarea>
+                        {% if form.description.errors %}
+                            {% for error in form.description.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group {% if form.image.errors %} has-error {% endif %}">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" value="{{ form.image.value }}">
+                        {% if form.image.errors %}
+                            {% for error in form.image.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group {% if form.keywords.errors %} has-error {% endif %}">
+                        <label for="keywords">Keywords</label>
+                        <input name="keywords" class="btn btn-sm" 
+                            value="{{ form.keywords_list }}"
+                            data-role="tagsinput">
+                        {% if form.keywords.errors %}
+                            {% for error in form.keywords.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>                                        
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <div class="text-right">
                         <div class="btn-group">
-                            <a href="{% url 'instructors:instructor_list' %}" class="btn btn-default"> Cancel</a>
+                            <a href="{% url 'courses:course_list' %}" class="btn btn-default"> Cancel</a>
                             <button type="submit" name="saveandnew" value="Save and New" class="btn btn-default">Save and New</button>
                             <button type="submit" name="save" value="Save" class="btn btn-primary">Save</button>
                         </div>
