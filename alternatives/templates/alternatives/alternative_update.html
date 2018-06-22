@@ -19,9 +19,13 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="form-group {% if form.name.errors %} has-error {% endif %}">
+                    <div class="form-group 
+                        {% if form.name.errors %} has-error {% endif %}">
                         <label for="name">Name</label>
-                        <input class="form-control" name="name" placeholder="Name" value="{{ form.name.value }}">
+                        <input class="form-control" 
+                            name="name" 
+                            placeholder="Name" 
+                            value="{{ form.name.value }}">
                         {% if form.name.errors %}
                             {% for error in form.name.errors %}
                                 <span class="help-block">{{ error }}</span>
@@ -33,9 +37,22 @@
                 <div class="box-footer">
                     <div class="text-right">
                         <div class="btn-group">
-                            <a href="{% url 'categories:category_list' %}" class="btn btn-default"> Cancel</a>
-                            <button type="submit" name="saveandnew" value="Save and New" class="btn btn-default">Save and New</button>
-                            <button type="submit" name="save" value="Save" class="btn btn-primary">Save</button>
+                            <a href="{% url 'categories:category_list' %}" 
+                                class="btn btn-default"> 
+                                Cancel
+                            </a>
+                            <button type="submit" 
+                                name="saveandnew" 
+                                value="Save and New" 
+                                class="btn btn-default">
+                                Save and New
+                            </button>
+                            <button type="submit" 
+                                name="save" 
+                                value="Save" 
+                                class="btn btn-primary">
+                                Save
+                            </button>
                         </div>
                     </div>
                 </div>

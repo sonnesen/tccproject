@@ -1,9 +1,13 @@
-{% extends "base.html" %} {% block breadcrumb %}
+{% extends "base.html" %} 
+
+{% block breadcrumb %}
 <li>
     <a href="{% url 'categories:category_list' %}">Categories</a>
 </li>
 <li class="active">Detail</li>
-{% endblock breadcrumb %} {% block content %}
+{% endblock breadcrumb %} 
+
+{% block content %}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-info">
@@ -22,13 +26,18 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="text-right">
-                    <a href="{% url 'categories:category_list' %}" class="btn btn-primary">
+                    <a href="{% url 'categories:category_list' %}" 
+                        class="btn btn-primary">
                         <i class="fa fa-chevron-left"></i> Return
                     </a>
-                    <a href="{% url 'categories:category_edit' category.pk %}" class="btn btn-default">
+                    <a href="{% url 'categories:category_edit' category.pk %}" 
+                        class="btn btn-default">
                         <i class="fa fa-pencil"></i> Edit
                     </a>
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                    <button type="button" 
+                        class="btn btn-default" 
+                        data-toggle="modal" 
+                        data-target="#modal-default">
                         <i class="fa fa-trash"></i> Remove
                     </button>
                 </div>
@@ -42,7 +51,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" 
+                    class="close" 
+                    data-dismiss="modal" 
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title">Are you sure?</h4>
@@ -51,10 +63,19 @@
                 <p>Are you sure you want to delete the selected category?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, take me back</button>
-                <form action="{% url 'categories:category_delete' category.pk %}" method="post">
+                <button type="button" 
+                    class="btn btn-default pull-left" 
+                    data-dismiss="modal">
+                    No, take me back
+                </button>
+                <form 
+                    action="{% url 'categories:category_delete' category.pk %}" 
+                    method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
+                    <button type="submit" 
+                        class="btn btn-primary">
+                        Yes, I'm sure
+                    </button>
                 </form>
             </div>
         </div>

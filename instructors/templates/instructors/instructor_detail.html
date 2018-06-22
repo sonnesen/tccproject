@@ -1,9 +1,13 @@
-{% extends "base.html" %} {% block breadcrumb %}
+{% extends "base.html" %} 
+
+{% block breadcrumb %}
 <li>
     <a href="{% url 'instructors:instructor_list' %}">Instructors</a>
 </li>
 <li class="active">Detail</li>
-{% endblock breadcrumb %} {% block content %}
+{% endblock breadcrumb %} 
+
+{% block content %}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-info">
@@ -15,28 +19,40 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input class="form-control" value="{{ instructor.name }}">
+                        <input class="form-control" 
+                            value="{{ instructor.name }}">
                     </div>
                     <div class="form-group">
                         <label for="contact">Contact</label>
-                        <input type="email" class="form-control" value="{{ instructor.contact }}">
+                        <input type="email" 
+                            class="form-control" 
+                            value="{{ instructor.contact }}">
                     </div>
                     <div class="form-group">
                         <label for="about">About</label>
-                        <textarea class="form-control" style="resize: none" rows="3">{{ instructor.about }}</textarea>
+                        <textarea class="form-control" 
+                            style="resize: none" 
+                            rows="3">
+                            {{ instructor.about }}
+                        </textarea>
                     </div>
                 </div>
             </fieldset>
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="text-right">
-                    <a href="{% url 'instructors:instructor_list' %}" class="btn btn-primary">
+                    <a href="{% url 'instructors:instructor_list' %}" 
+                        class="btn btn-primary">
                         <i class="fa fa-chevron-left"></i> Return
                     </a>
-                    <a href="{% url 'instructors:instructor_edit' instructor.pk %}" class="btn btn-default">
+                    <a href="{% url 'instructors:instructor_edit' instructor.pk %}" 
+                        class="btn btn-default">
                         <i class="fa fa-pencil"></i> Edit
                     </a>
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                    <button type="button" 
+                        class="btn btn-default" 
+                        data-toggle="modal" 
+                        data-target="#modal-default">
                         <i class="fa fa-trash"></i> Remove
                     </button>
                 </div>
@@ -50,7 +66,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" 
+                    class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title">Are you sure?</h4>
@@ -59,10 +76,16 @@
                 <p>Are you sure you want to delete the selected instructor?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, take me back</button>
-                <form action="{% url 'instructors:instructor_delete' instructor.pk %}" method="post">
+                <button type="button" class="btn btn-default pull-left" 
+                    data-dismiss="modal">No, take me back</button>
+                <form 
+                    action="{% url 'instructors:instructor_delete' instructor.pk %}" 
+                    method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
+                    <button type="submit" 
+                        class="btn btn-primary">
+                        Yes, I'm sure
+                    </button>
                 </form>
             </div>
         </div>
@@ -70,5 +93,4 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 {% endblock content %}

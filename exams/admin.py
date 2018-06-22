@@ -10,7 +10,10 @@ from questions.models import Question
 class EditLinkToInlineObject(object):
 
     def edit_link(self, instance):
-        url = reverse('admin:{0}_{1}_change'.format(instance._meta.app_label, instance._meta.model_name), args=[instance.pk])
+        url = reverse('admin:{0}_{1}_change'.format(
+            instance._meta.app_label, 
+            instance._meta.model_name), 
+            args=[instance.pk])
         if instance.pk:
             return mark_safe('<a href="{0}">edit</a>'.format(url))
         else:

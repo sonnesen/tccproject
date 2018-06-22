@@ -6,7 +6,9 @@ from questions.models import Question
 
 
 class AlternativeSerializer(ModelSerializer):
-    question = serializers.PrimaryKeyRelatedField(queryset=Question.objects.all())
+    question = serializers.PrimaryKeyRelatedField(
+        queryset=Question.objects.all()
+    )
     
     class Meta:
         model = Alternative

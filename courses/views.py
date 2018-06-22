@@ -48,7 +48,8 @@ class CourseForm(ModelForm):
 
     class Meta:
         model = Course
-        fields = ['name', 'category', 'instructor', 'keywords', 'description', 'image']
+        fields = ['name', 'category', 'instructor', 'keywords', 
+                  'description', 'image']
                 
     def keywords_list(self):
         tagfields = self.instance.keywords.all()

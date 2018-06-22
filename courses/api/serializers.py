@@ -27,7 +27,9 @@ class CourseSerializer(TaggitSerializer, ModelSerializer):
             category, created = Category.objects.get_or_create(**category_data)
 
         if instructor_data:
-            instructor, created = Instructor.objects.get_or_create(**instructor_data)
+            instructor, created = Instructor.objects.get_or_create(
+                **instructor_data
+            )
 
         course = Course.objects.create(**validated_data)
         course.category = category

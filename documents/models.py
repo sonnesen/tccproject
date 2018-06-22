@@ -9,7 +9,8 @@ def upload_to_dir(instance, filename):
 class Document(models.Model):
     name = models.CharField(max_length=100)
     uri = models.FileField(upload_to=upload_to_dir)
-    course = models.ForeignKey(Course, related_name='documents', on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='documents', 
+                               on_delete=models.CASCADE)
     
     
     def __str__(self):

@@ -6,7 +6,7 @@ from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from alternatives.models import Category
+from alternatives.models import Alternative
 
 
 class BaseView(View):
