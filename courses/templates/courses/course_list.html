@@ -1,39 +1,40 @@
-{% extends 'base.html' %} {% block breadcrumb %}
-<li class="active">Courses</li>
-{% endblock breadcrumb %} {% block content %}
+{% extends 'base.html' %} 
 
+{% block breadcrumb %}
+<li class="active">Courses</li>
+{% endblock breadcrumb %} 
+
+{% block content %}
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Courses</h3>
                 <div class="text-right">
-                    <a href="{% url 'courses:course_create' %}" class="btn btn-primary">New Instructor</a>
+                    <a href="{% url 'courses:course_create' %}" 
+                        class="btn btn-primary">
+                        New Course
+                    </a>
                 </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="courses_table" class="table table-bordered table-striped">
+                <table id="courses_table" 
+                    class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Created At</th>
                             <th>Category</th>
                             <th>Instructor</th>
                             <th>Description</th>
-                            <th>Keywords</th>
-                            <th>Image</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>Name</th>
-                            <th>Created At</th>
                             <th>Category</th>
                             <th>Instructor</th>
                             <th>Description</th>
-                            <th>Keywords</th>
-                            <th>Image</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -65,18 +66,16 @@ var table = $('#courses_table').DataTable({
             'searchable': true,
             'render': function(data, type, row, meta) {
                 if (type === 'display') {
-                    var url = "{% url 'courses:course_detail' 12345 %}".replace(/12345/, row.id);
+                    var url = "{% url 'courses:course_detail' 12345 %}"
+                        .replace(/12345/, row.id);
                     data = '<a href=' + url + '>' + data + '</a>';
                 }
                 return data;
             }
         },
-        {'data': 'created_at', 'searchable': false},
-        {'data': 'category.name', 'searchable': false},
-        {'data': 'instructor.name', 'searchable': false},
-        {'data': 'description', 'searchable': false},
-        {'data': 'keywords', 'searchable': false},
-        {'data': 'image', 'searchable': false}
+        {   'data': 'category.name', 'searchable': false},
+        {   'data': 'instructor.name', 'searchable': false},
+        {   'data': 'description', 'searchable': false}
     ]
 })
 
