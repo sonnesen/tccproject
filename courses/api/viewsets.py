@@ -31,7 +31,9 @@ class CourseViewSet(ModelViewSet):
         if search_value:
             queryset = queryset.filter(
                 Q(name__icontains=search_value) | 
-                Q(contact__icontains=search_value)
+                Q(category__name__icontains=search_value) |
+                Q(instructor__name__icontains=search_value) |
+                Q(description__icontains=search_value)
             )
             self.recordsFiltered = queryset.count()
  
