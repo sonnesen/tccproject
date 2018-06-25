@@ -5,7 +5,7 @@ from instructors.models import Instructor
 
 @admin.register(Instructor)
 class InstructorModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'contact', 'about')
+    list_display = ('name', 'contact', 'about',)
     search_fields = ('name',)
 
 

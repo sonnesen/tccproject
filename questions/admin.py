@@ -15,4 +15,7 @@ class QuestionModelAdmin(admin.ModelAdmin):
     autocomplete_fields = ('exam',)
     list_filter = ('exam',)
     inlines = [AlternativeInlineModel, ]
+    
+    def has_add_permission(self, request):
+        return False
 

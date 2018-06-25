@@ -25,7 +25,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{% static 'css/skins/skin-blue-light.min.css' %}">
   
-  <link rel="stylesheet" href="{% static 'vendor/bootstrap-tagsinput/bootstrap-tagsinput.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/jquery-tagsinput/dist/css/jquery.tagsinput.min.css' %}">
+  
+  <link rel="stylesheet" href="{% static 'vendor/select2/dist/css/select2.min.css' %}">  
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -431,7 +433,9 @@ desired effect
 <!-- FastClick -->
 <script src="{% static 'vendor/fastclick/lib/fastclick.js' %}"></script>
 
-<script src="{% static 'vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'vendor/jquery-tagsinput/dist/js/jquery.tagsinput.min.js' %}"></script>
+
+<script src="{% static 'vendor/select2/dist/js/select2.min.js' %}"></script>
 
 <script>
     $.notifyDefaults({

@@ -33,9 +33,20 @@ class QuestionInline(EditLinkToInlineObject, TabularInline):
 
 @admin.register(Exam)     
 class ExamModelAdmin(ModelAdmin):
-    list_display = ('title', 'unit',)
+    list_display = ('title', 'unit','course',)
+    fields = ('title', 'unit', 'course',)
+    readonly_fields = ('course',)
     search_fields = ('title',)
     autocomplete_fields = ('unit',)
     list_filter = ('unit',)
-    inlines = [QuestionInline, ]
+    inlines = [QuestionInline]
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def course(self, obj):
+        return obj.unit.course
+    
+    course.short_description = 'Course'
+    course.admin_order_field = 'unit__course'
 

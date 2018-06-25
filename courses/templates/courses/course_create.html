@@ -24,7 +24,6 @@
                         <label for="name">Name</label>
                         <input class="form-control" 
                             name="name" 
-                            placeholder="Name" 
                             value="{{ form.name.value|default:'' }}"> 
                             {% if form.name.errors %} 
                                 {% for error in form.name.errors %}
@@ -32,31 +31,37 @@
                                 {% endfor %} 
                             {% endif %}
                     </div>
-                    <div class="form-group 
-                        {% if form.category.errors %} has-error {% endif %}">
-                        <label for="category">Category</label>
-                        <input class="form-control" 
-                            name="category" 
-                            placeholder="Category" 
-                            value="{{ form.contact.value|default:'' }}"> 
-                            {% if form.contact.errors %} 
-                                {% for error in form.contact.errors %}
-                                    <span class="help-block">{{ error }}</span>
-                                {% endfor %} 
-                            {% endif %}
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category_list" 
+                            class="form-control select2
+                            {% if form.category.errors %} has-error {% endif %}">
+                            <option></option> 
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category }}</option>
+                            {% endfor %}                            
+                        </select>
+                        {% if form.category.errors %} 
+                            {% for error in form.category.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %} 
+                        {% endif %}
                     </div>
-                    <div class="form-group 
-                        {% if form.instructor.errors %} has-error {% endif %}">
-                        <label for="instructor">Instructor</label>
-                        <input class="form-control" 
-                            name="instructor" 
-                            placeholder="Instructor" 
-                            value="{{ form.instructor.value|default:'' }}"> 
-                            {% if form.instructor.errors %} 
-                                {% for error in form.instructor.errors %}
-                                    <span class="help-block">{{ error }}</span>
-                                {% endfor %} 
-                            {% endif %}
+                    <div class="form-group">
+                        <label>Instructor</label>
+                        <select name="instructor_list" 
+                            class="form-control select2
+                            {% if form.instructor.errors %} has-error {% endif %}">
+                            <option></option> 
+                            {% for instructor in instructors %}
+                            <option value="{{ instructor.id }}">{{ instructor }}</option>
+                            {% endfor %}                            
+                        </select>
+                        {% if form.instructor.errors %} 
+                            {% for error in form.instructor.errors %}
+                                <span class="help-block">{{ error }}</span>
+                            {% endfor %} 
+                        {% endif %}
                     </div>
                     <div class="form-group 
                         {% if form.description.errors %} has-error {% endif %}">
@@ -64,8 +69,7 @@
                         <textarea class="form-control" 
                             style="resize: none" 
                             rows="3" 
-                            name="description" 
-                            placeholder="Description">
+                            name="description">
                             {{ form.description.value|default:'' }}
                         </textarea> 
                         {% if form.description.errors %} 
@@ -78,9 +82,7 @@
                         {% if form.image.errors %} has-error {% endif %}">
                         <label for="image">Image</label>
                         <input type="file" 
-                            class="form-control" 
                             style="resize: none" 
-                            rows="3" 
                             name="image"
                             id="image-id"
                             value="{{ form.image.value }}">
@@ -89,6 +91,11 @@
                                 <span class="help-block">{{ error }}</span>
                             {% endfor %} 
                         {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="keywords">Keywords</label>
+                        <input class="form-control tags"
+                            name="keywords">
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -120,3 +127,12 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block javascript %}
+<script>
+    $('.tags').tagsInput({
+        'defaultText': '',
+        'width': '100%' 
+    });
+</script>
+{% endblock %}

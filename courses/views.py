@@ -8,7 +8,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from courses.models import Course
 from django.forms.models import ModelForm
-from django.contrib.contenttypes import fields
+from categories.models import Category
+from instructors.models import Instructor
 
 
 class BaseView(View):
@@ -32,6 +33,15 @@ class CourseCreateView(SuccessMessageMixin, BaseView, CreateView):
     success_url = reverse_lazy('courses:course_list')
     success_message = 'Course %(name)s was created successfully'
 
+    def get(self, request):
+        categories = Category.objects.all()
+        instructors = Instructor.objects.all()
+        context = {
+            'categories': categories,
+            'instructors': instructors
+        }
+        return render(request, 'courses/course_create.html', context)
+        
     def post(self, request, *args, **kwargs):
         if request.POST.get('saveandnew'):
             self.success_url = reverse_lazy('courses:course_create')
