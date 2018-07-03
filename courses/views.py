@@ -1,14 +1,15 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.forms.models import ModelForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
 
-from courses.models import Course
-from django.forms.models import ModelForm
 from categories.models import Category
+from courses.models import Course
 from instructors.models import Instructor
 
 
@@ -23,7 +24,11 @@ class BaseView(View):
 class CourseListView(BaseView, View):
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'courses/course_list.html')
+        courses = Course.objects.all()
+        context = {
+            'courses': courses
+        }
+        return render(request, 'courses/course_list.html', context)
 
 
 class CourseCreateView(SuccessMessageMixin, BaseView, CreateView):
