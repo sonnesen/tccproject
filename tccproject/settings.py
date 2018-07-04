@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'taggit',
     'taggit_serializer',
+    'home',
     'dashboard',
     'instructors',
     'categories',
