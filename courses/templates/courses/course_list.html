@@ -5,21 +5,23 @@
 {% endblock breadcrumb %} 
 
 {% block content %}
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Courses</h3>                
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                {% for course in courses %}
-                
-                {% empty %}
-                    <p>Ops! Parece que ainda não há nenhum curso disponível.</p>
-                {% endfor %}
-            </div>
+	<!-- Page Heading -->
+    <h1 class="my-4">Lista de Cursos</h1>
+
+    {% for course in courses %}  
+    <div class="row">
+    	<div class="col-md-7">
+    		<a href="#">
+            	<img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+          	</a>
         </div>
-    </div>
-</div>
+        <div class="col-md-5">
+          	<h3>{{ course.name }}</h3>
+          	<p>{{ course.description|linebreaks }}</p>
+          	<a class="btn btn-primary" href="#">Ver detalhes do curso</a>
+        </div>
+	</div>
+    <hr>
+    {% endfor %}
+	
 {% endblock %}

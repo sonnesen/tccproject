@@ -1,8 +1,9 @@
-from django.views.generic.base import View
 from django.shortcuts import render
+from django.views.generic.base import View
 
 class HomeView(View):
+    template_name = 'home/index.html'
+    context = {}
     
     def get(self, request):
-        context = {}
-        return render(request, 'home.html', context)
+        return render(request, self.template_name, self.context)

@@ -3,9 +3,9 @@ from django.shortcuts import render
 
 
 class DashboardView(View):
-    template_name = 'index.html'
-    context = {'title': 'My Dashboard'}
+    template_name = 'dashboard/index.html'
+    context = {}
     
-    def get(self, request, *args, **kargs):
+    def get(self, request):
         return render(request, self.template_name, self.context)
     

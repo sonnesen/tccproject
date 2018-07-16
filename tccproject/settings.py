@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from django.conf.global_settings import AUTH_USER_MODEL
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_serializer',
     'home',
+    'accounts',    
     'dashboard',
     'instructors',
     'categories',
@@ -73,7 +75,9 @@ ROOT_URLCONF = 'tccproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -148,11 +152,12 @@ REST_FRAMEWORK = {
     )
 }
 
-# AUTH_USER_MODEL = 'accounts.User'
-
 TAGGIT_CASE_INSENSITIVE = True
 
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
 INTERNAL_IPS = ['127.0.0.1',]
+
+# Authentication
+AUTH_USER_MODEL = 'accounts.User'
