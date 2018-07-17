@@ -6,9 +6,9 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Studere - Aprendizado Online">
+<meta name="description" content="Studere - Cursos Online">
 
-<title>Studere - Aprendizado Online</title>
+<title>Studere - Cursos Online</title>
 
 <!-- Bootstrap core CSS -->
 <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -44,12 +44,12 @@ body {
 						<span class="sr-only">(current)</span>
 					</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Cursos</a></li>
 				{% if user.is_authenticated %}
 				<li class="nav-item"><a class="nav-link" href="#">Painel</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Sair</a></li>
 				{% else %}
-				<li class="nav-item"><a class="nav-link" href="#">Entrar</a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'accounts:logon' %}">Entrar</a></li>
 				{% endif %}
 			</ul>
 		</div>
@@ -59,8 +59,8 @@ body {
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 text-center">
-				<h1 class="mt-5">Studere - Aprendizado Online</h1>
-				<p class="lead">Plataforma de aprendizado online para quem quer aprender e estar sempre atualizado.</p>				
+				<h1 class="mt-5">Studere - Cursos Online</h1>
+				<p class="lead">Plataforma de cursos online para quem quer aprender e estar sempre atualizado.</p>				
 			</div>
 		</div>		
 	</div>

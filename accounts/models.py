@@ -15,7 +15,8 @@ class User(AbstractBaseUser, PermissionsMixin):
             'seguintes caracteres: @/./+/-/_', 'invalid')]
     )
     email = models.EmailField('E-mail', unique=True)
-    name = models.CharField('Nome', max_length=100, blank=True)
+    first_name = models.CharField('Nome', max_length=30, blank=True)
+    last_name = models.CharField('Sobrenome', max_length=150, blank=True)
     is_active = models.BooleanField('Está ativo?', blank=True, default=True)
     is_staff = models.BooleanField('É da equipe?', blank=True, default=False)
     date_joined = models.DateTimeField('Data de Entrada', auto_now_add=True)

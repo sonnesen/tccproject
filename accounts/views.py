@@ -1,43 +1,32 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, get_user_model
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model, authenticate, login
+from django.shortcuts import render, redirect
+from django.views.generic.base import View
 
-# from .forms import RegisterForm, EditAccountForm, PasswordResetForm
-from .models import PasswordReset
+from accounts.forms import RegisterForm
 
 
-User = get_user_model()
+User = get_user_model
 
 
-def DashboardView(LoginRequiredMixin, View):
-    template_name = 'accounts/dashboard.html'
-    context = {}
+class RegisterView(View):
+    template_name = 'registration/register.html'
     
     def get(self, request):
-        return render(request, template_name, context)
-
-
-# def register(request):
-#     template_name = 'accounts/register.html'
-#     if request.method == 'POST':
-#         form = RegisterForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             user = authenticate(
-#                 username=user.username, password=form.cleaned_data['password1']
-#             )
-#             login(request, user)
-#             return redirect('core:home')
-#     else:
-#         form = RegisterForm()
-#     context = {
-#         'form': form
-#     }
-#     return render(request, template_name, context)
-# 
-# 
+        context = { 'form': RegisterForm() }
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user = authenticate(
+                username=user.username,
+                password=form.cleaned_data['password1']
+            )
+            login(request, user)
+            return redirect('dashboard:home')
+    
+ 
 # def password_reset(request):
 #     template_name = 'accounts/password_reset.html'
 #     context = {}
