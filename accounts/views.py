@@ -4,7 +4,6 @@ from django.views.generic.base import View
 
 from accounts.forms import RegisterForm
 
-
 User = get_user_model
 
 
@@ -24,8 +23,7 @@ class RegisterView(View):
                 password=form.cleaned_data['password1']
             )
             login(request, user)
-            return redirect('dashboard:home')
-    
+            return redirect('dashboard:index')
  
 # def password_reset(request):
 #     template_name = 'accounts/password_reset.html'

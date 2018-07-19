@@ -4,7 +4,8 @@
 <div class="card card-login mx-auto mt-5">
 	<div class="card-header">Entrar</div>
 	<div class="card-body">
-		<form>
+		<form action="{% url 'accounts:login' %}" method="post">
+			{% csrf_token %}
 			<div class="form-group">
 				<label for="exampleInputEmail1">E-mail</label> 
 				<input class="form-control" id="exampleInputEmail1" type="email"
@@ -15,7 +16,7 @@
 				<input class="form-control" id="exampleInputPassword1" type="password"
 					placeholder="Senha">
 			</div>
-			<a class="btn btn-primary btn-block" href="{% url 'accounts:login' %}">Entrar</a>
+			<button type="submit" class="btn btn-primary btn-block">Entrar</button>
 		</form>
 		<div class="text-center">
 			<a class="d-block small mt-3" href="{% url 'accounts:register' %}">Registre-se</a> 

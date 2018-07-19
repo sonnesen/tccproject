@@ -1,6 +1,8 @@
-from django.urls.conf import path
-from accounts.views import RegisterView
 from django.contrib.auth.views import LoginView
+from django.urls.conf import path
+
+from accounts.views import RegisterView
+
 
 app_name = 'accounts'
 
