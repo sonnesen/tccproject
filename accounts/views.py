@@ -4,8 +4,8 @@ from django.views.generic.base import View
 
 from accounts.forms import RegisterForm
 
-User = get_user_model
 
+User = get_user_model
 
 class RegisterView(View):
     template_name = 'registration/register.html'

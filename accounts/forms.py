@@ -2,13 +2,10 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.forms.models import ModelForm
 
-from .models import PasswordReset
-
 
 # from simplemooc.core.mail import send_mail_template
 # from simplemooc.core.utils import generate_hash_key
 User = get_user_model()
-
 
 # class PasswordResetForm(forms.Form):
 # 

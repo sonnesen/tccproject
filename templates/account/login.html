@@ -4,18 +4,22 @@
 <div class="card card-login mx-auto mt-5">
 	<div class="card-header">Entrar</div>
 	<div class="card-body">
-		<form action="{% url 'accounts:login' %}" method="post">
+		<form method="post">
 			{% csrf_token %}
+			
+			{{ form.non_field_errors }}
+			
 			<div class="form-group">
-				<label for="exampleInputEmail1">E-mail</label> 
-				<input class="form-control" id="exampleInputEmail1" type="email"
+				<label for="username">E-mail</label> 
+				<input class="form-control" name="email" type="email"
 					aria-describedby="emailHelp" placeholder="E-mail">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputPassword1">Senha</label> 
-				<input class="form-control" id="exampleInputPassword1" type="password"
+				<label for="password">Senha</label> 
+				<input class="form-control" name="password" type="password"
 					placeholder="Senha">
 			</div>
+			
 			<button type="submit" class="btn btn-primary btn-block">Entrar</button>
 		</form>
 		<div class="text-center">
