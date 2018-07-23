@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
 <div class="card card-login mx-auto mt-5">
 	<div class="card-header">Entrar</div>
@@ -9,6 +11,15 @@
 			
 			{{ form.non_field_errors }}
 			
+			{% for field in form %}
+			<div class="form-group">
+				{{ field.label_tag }}
+				{{ field|add_class:'form-control' }}
+				{{ field.errors }}
+			</div>
+			{% endfor %}
+			
+			<!-- 
 			<div class="form-group">
 				<label for="username">E-mail</label> 
 				<input class="form-control" name="email" type="email"
@@ -19,7 +30,7 @@
 				<input class="form-control" name="password" type="password"
 					placeholder="Senha">
 			</div>
-			
+			-->
 			<button type="submit" class="btn btn-primary btn-block">Entrar</button>
 		</form>
 		<div class="text-center">
