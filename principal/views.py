@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 
 class HomeView(View):
-    template_name = 'home/index.html'
+    template_name = 'principal/home.html'
     context = {}
     
     def get(self, request):

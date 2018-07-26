@@ -20,7 +20,7 @@ class RegistrationView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard:home')
+            return redirect('dashboard:principal')
         else:
             context = { 'form': form }
             return render(request, self.template_name, context)

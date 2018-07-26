@@ -15,7 +15,7 @@ from courses import urls as courses_urls
 from courses.api.viewsets import CourseViewSet
 from dashboard import urls as dashboard_urls
 from documents.api.viewsets import DocumentViewSet
-from home import urls as home_urls
+from principal import urls as principal_urls
 from instructors import urls as instructors_urls
 from instructors.api.viewsets import InstructorViewSet
 from units.api.viewsets import UnitViewSet
@@ -32,7 +32,7 @@ router.register('documents', DocumentViewSet)
 schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
-    path('', include(home_urls, namespace='home')),
+    path('', include(principal_urls, namespace='principal')),
     path('api-token-auth/', obtain_auth_token),
     path('schema/', schema_view),
     path('api/v1/', include(router.urls)),

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_serializer',
     'widget_tweaks',
-    'home',
+    'principal',
     'accounts',    
     'dashboard',
     'instructors',
@@ -158,5 +158,6 @@ MEDIA_URL = '/media/'
 INTERNAL_IPS = ['127.0.0.1',]
 
 # Authentication
-LOGIN_REDIRECT_URL = 'dashboard:home'
+LOGIN_REDIRECT_URL = 'dashboard:principal'
+LOGOUT_REDIRECT_URL = 'principal:principal'
 
