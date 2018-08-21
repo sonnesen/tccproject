@@ -1,0 +1,125 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load courses_tags %}
+{% load widget_tweaks %}
+
+{% block navigation_content %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{ course.name }}">
+    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+      href="#collapseCourses" data-parent="#dashboard">
+      <i class="fa fa-book" aria-hidden="true"></i>
+      <span class="nav-link-text">{{ course.name }}</span>
+    </a>
+    <ul class="sidenav-second-level collapse" id="collapseCourses">
+      {% course_menu_units course %}
+    </ul>
+  </li>
+{% endblock %}
+        
+{% block content %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      {% block breadcrumbs %}
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:dashboard' %}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:course_units' course.pk %}">{{ course.name }}</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="card-link" href="{% url 'courses:unit_detail' unit.course.pk unit.pk %}"> {{ unit }}</a>
+        </li>        
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:exam_detail' course.pk unit.pk exam.pk %}">Resumo {{ exam }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{ exam }}</li>
+      </ol>
+      {% endblock %}
+      {% block content_page %}
+      <div class="row">   
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h1 class="my-1">{{ exam }}</h1>
+            </div>
+            <div class="card-body">  
+              <form method="post" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                  <div class="alert alert-dander role="alert">
+                  {% for error in form.non_field_errors %}
+                    <p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p>
+                  {% endfor %}   
+                  </div>
+                {% endif %}
+                <ul class="list-group">
+                  {{ user_answers }}
+	                {% for question in exam.questions.all %}
+	                  <li class="list-group-item">
+	                    {% with question_number=forloop.counter %}
+	                    <h3 class="mb-3">Pergunta {{ question_number }}</h3>
+	                    <h5>{{ question|linebreaks }}</h5>
+	                    <fieldset class="form-group">	                      	                    
+	                      {% for alternative in question.alternatives.all %}
+	                        {% with alternative_counter=forloop.counter %} 
+									        <div class="form-check">
+									          <input type="radio"
+									            class="form-check-input"  
+									            name="question_{{ question_number }}" 
+									            id="id_alternative_{{ alternative.pk }}" 
+									            value="{{ alternative.pk }}"
+									            required									            
+									            {% for answer in user_answers %}
+									              {% if answer.alternative_id == alternative.pk %}
+									                checked="checked"
+									              {% endif %}
+									            {% endfor %}
+									           >
+									          <label class="form-check-label" for="id_alternative_{{ alternative.pk }}">
+									            {% convert_ascii_to_string alternative_counter|add:'96' %}. {{ alternative }}
+									          </label>
+									          {% if forloop.last %}
+										          {% with question_tag_name='question_'|concat_str:question_number %}
+										            {% for field in form.fields %}
+										              {% if field.name == question_tag_name %}
+										                {% for error in field.errors %}
+	                                    <div class="invalid-feedback d-block">
+	                                      * {{ error }}
+	                                    </div> 
+	                                  {% endfor %}
+										              {% endif %}
+										            {% endfor %}
+										          {% endwith %}
+										        {% endif %}						  
+									        </div>
+									        {% endwith %}
+									      {% endfor %}
+									    </fieldset>
+									    {% endwith %}
+									  </li>									    									  
+									{% endfor %}
+								</ul>
+                <button type="submit" class="btn btn-primary btn-block">Enviar</button>      
+              </form>                
+            </div>
+          </div>
+        </div>              
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+  
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright © Studere 2018</small>
+      </div>
+    </div>
+  </footer>
+    
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+{% endblock %}

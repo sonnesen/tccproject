@@ -1,0 +1,9 @@
+{% for unit in units %}
+<li>
+  <a href="#"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> {{ unit }}</a>
+</li>
+{% empty %}
+<li>
+  <a href="#">Nenhuma aula cadastrada para este curso!</a>
+</li>
+{% endfor %}

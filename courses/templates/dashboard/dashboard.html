@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load courses_tags %}
+
+  {% block body_attrs %} class="fixed-nav sticky-footer bg-dark" id="page-top" {% endblock %}
+  {% block navigation %}
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="{% url 'courses:home' %}">Studere</a>
+    <button class="navbar-toggler navbar-toggler-right" 
+      type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+      aria-controls="navbarResponsive" aria-expanded="false" 
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="dashboard">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="{% url 'courses:dashboard' %}">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+        {% block navigation_content %}
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Meus cursos">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" 
+            href="#collapseCourses" data-parent="#dashboard">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+            <span class="nav-link-text">Meus cursos</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseCourses">
+            {% user_menu_courses user %}
+          </ul>
+        </li>
+        {% endblock %}
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Minha conta">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" 
+            href="#collapseAccount" data-parent="#dashboard">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+            <span class="nav-link-text">Minha Conta</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseAccount">
+            <li>
+              <a href="{% url 'accounts:update' %}">Dados pessoais</a>
+            </li>
+            <li>
+              <a href="{% url 'accounts:password_change' %}">Alterar senha</a>
+            </li>            
+          </ul>
+        </li>        
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto text-center">
+        <span class="navbar-text mx-2 navbar-light">
+          Seja bem-vindo(a), {{ user.get_full_name|default:user.username }}
+        </span>
+      </ul>
+      <ul class="navbar-nav ml-auto">        
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#logoutModal">
+            <i class="fa fa-fw fa-sign-out"></i>Sair
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  {% endblock %}
+  
+  {% block content %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      {% block breadcrumbs %}
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:dashboard' %}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Meus Cursos</li>
+      </ol>
+      {% endblock %}
+      {% block content_page %}      
+      <div class="row">        
+        <div class="col-12">
+          <h1>Meus Cursos</h1>          
+        </div>
+        {% user_courses user %}                
+      </div>  
+      {% endblock %}    
+    </div>
+    
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © Studere 2018</small>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>    
+            
+  </div>
+  {% endblock %}
+  
+  {% block scripts %}         
+    <script type="text/javascript">
+      $.notifyDefaults({
+    	  placement: {
+    		  from: 'top',
+    		  align: 'center'
+    	  }
+      });
+      
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            $.notify({
+            	icon: 'fa fa-ban',
+            	message: '{{ message }}'
+            }, {
+            	type: 'error'
+            });
+          {% elif messge.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            $.notify({
+            	icon: 'fa fa-exclamation-triangle',
+              message: '{{ message }}'
+            }, {
+              type: 'warning'
+            });  
+          {% elif messge.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            $.notify({
+            	icon: 'fa fa-info-circle',
+              message: '{{ message }}'
+            }, {
+              type: 'info'
+            });
+          {% else %}
+          $.notify({
+        	    icon: 'fa fa-check-circle',
+              message: '{{ message }}'
+            }, {
+              type: 'success'
+            });
+          {% endif %}
+        {% endfor %}        
+      {% endif %}
+    </script>
+  {% endblock %}
+

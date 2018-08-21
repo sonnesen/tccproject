@@ -1,29 +1,35 @@
-{% extends 'base.html' %} 
+{% extends 'courses/base_courses.html' %} 
 
 {% block content %}
-
-<!-- Page Heading -->
-<h1 class="my-4">Cursos</h1>
-  
-{% for course in courses %}
-<div class="row">  	
-  <div class="col-md-7">
-    <a href="#">
-      <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
-    </a>
-  </div>
-  <div class="col-md-5">
-    <h3>{{ course.name }}</h3>
-    <p>{{ course.description|linebreaks }}</p>
-    <a class="btn btn-primary" href="{% url 'courses:course_detail' course.pk %}">Detalhes do curso</a>
-  </div>
-</div>
-{% empty %}
-<div class="row">
-    <div class="col-md-12">        
-      <p class="text-muted">Nenhum curso disponível no momento!</p>        
-    </div>
-</div>
-{% endfor %}
-      
+<div class="container">
+	<!-- Page Heading -->
+	<h1 class="my-4">Cursos</h1>
+	
+	{% for course in courses %}
+		<div class="row">
+			<div class="col-md-7">
+				<a href="#"> <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt=""></a>
+			</div>
+			<div class="col-md-5">
+				<h3>{{ course.name }}</h3>
+				<p>{{ course.description|linebreaks }}</p>
+				<p class="card-text">
+				{% for tag in course.keywords.all %}
+				<a href="#">
+				  <i class="fa fa-tag" aria-hidden="true"></i>
+				  {{ tag }}
+				</a>
+				{% endfor %}
+				</p>
+				<a class="btn btn-primary" href="{% url 'courses:course_detail' course.pk %}">Detalhes do curso</a>
+			</div>
+		</div>
+	{% empty %}
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-muted">Nenhum curso disponível no momento!</p>
+			</div>
+		</div>
+	{% endfor %}
+</div> 
 {% endblock %}

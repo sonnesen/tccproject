@@ -1,0 +1,9 @@
+{% for course in courses %}
+  <li>
+    <a href="{% url 'courses:course_units' course.pk %}"><i class="fa fa-book" aria-hidden="true"></i> {{ course }}</a>
+  </li>
+  {% empty %}
+  <li>
+    <a href="#">Nenhum curso encontrado</a>
+  </li>
+{% endfor %}

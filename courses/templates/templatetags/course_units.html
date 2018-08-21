@@ -1,0 +1,37 @@
+{% for unit in units %}
+<div class="col-lg-4 col-sm-6">
+  <div class="card bg-light mb-3">
+    <div class="card-header">
+      <div class="card-title">
+        <h3>
+          <a class="card-link" href="{% url 'courses:unit_detail' unit.course.pk unit.pk %}"> {{ unit }}</a>
+        </h3>
+      </div>
+      <div class="card-subtitle mb-0 text-muted">
+        <small>Atualizado em {{ unit.updated_at }}</small>
+      </div>
+    </div>  
+    <div class="card-body">
+	    <p class="card-text">{{ unit.description|truncatewords:20 }}</p>
+	    <p>
+	      <i class="fa fa-video-camera" aria-hidden="true"></i>
+	      {% with videos_count=unit.videos.count %}
+	      {{ videos_count }} Video{{ videos_count|pluralize }}
+	      {% endwith %}
+	    </p>
+	    <p>
+	      <i class="fa fa-file" aria-hidden="true"></i>      
+	      {% with documents_count=unit.documents.count %}
+	      {{ documents_count }} Material{{ videos_count|pluralize }}   
+	      {% endwith %}
+	    </p>
+	    <p>
+	      <i class="fa fa-tasks" aria-hidden="true"></i>      
+	      {% with exams_count=unit.exams.count %}
+	      {{ exams_count }} Avaliação{{ videos_count|pluralize }}   
+	      {% endwith %}
+	    </p>
+	  </div>
+  </div>
+</div>
+{% endfor %}

@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth import urls as auth_urls
 from django.urls import path
 from django.urls.conf import include
 from rest_framework import routers
@@ -9,40 +8,34 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_swagger.views import get_swagger_view
 
 from accounts import urls as accounts_urls
-from categories import urls as categories_urls
-from categories.api.viewsets import CategoryViewSet
 from courses import urls as courses_urls
-from courses.api.viewsets import CourseViewSet
-from dashboard import urls as dashboard_urls
-from documents.api.viewsets import DocumentViewSet
-from principal import urls as principal_urls
-from instructors import urls as instructors_urls
-from instructors.api.viewsets import InstructorViewSet
-from units.api.viewsets import UnitViewSet
-from videos.api.viewsets import VideoViewSet
+from courses.api.viewsets import CourseViewSet, DocumentViewSet, VideoViewSet, \
+    InstructorViewSet, CategoryViewSet, UnitViewSet, AlternativeViewSet, \
+    ExamViewSet, QuestionViewSet
 
+# from django.contrib.auth import urls as auth_urls
 router = routers.SimpleRouter()
-router.register('instructors', InstructorViewSet)
+
 router.register('categories', CategoryViewSet)
+router.register('instructors', InstructorViewSet)
 router.register('courses', CourseViewSet)
 router.register('units', UnitViewSet)
-router.register('videos', VideoViewSet)
+# router.register('enrollments', EnrollmentViewSet)
 router.register('documents', DocumentViewSet)
+router.register('videos', VideoViewSet)
+router.register('exams', ExamViewSet)
+router.register('questions', QuestionViewSet)
+router.register('alternatives', AlternativeViewSet)
 
 schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
-    path('', include(principal_urls, namespace='principal')),
+    path('', include(courses_urls, namespace='courses')),
     path('api-token-auth/', obtain_auth_token),
     path('schema/', schema_view),
     path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('dashboard/', include(dashboard_urls, namespace='dashboard')),
     path('accounts/', include(accounts_urls)),
-    path('accounts/', include(auth_urls)),
-    path('courses/', include(courses_urls, namespace='courses')),
-    path('instructors/', include(instructors_urls, namespace='instructors')),
-    path('categories/', include(categories_urls, namespace='categories')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

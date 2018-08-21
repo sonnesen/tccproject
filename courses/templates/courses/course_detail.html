@@ -1,33 +1,22 @@
-{% extends 'base.html' %} 
+{% extends 'courses/base_courses.html' %} 
 
 {% block content %}
-
-<header class="jumbotron my-4">
-	<h1 class="display-3">{{ course.name }}</h1>
-	<p class="lead">
-		{{ course.description }}
-	</p>
-	<a href="#" class="btn btn-primary btn-lg">Inscrever-se no curso</a>
-</header>
-
-<div class="row">	
-	<div class="col-lg-6">
-		<div class="card-body">
-			<h3 class="card-title">Instrutor</h3>
-			<h4>{{ course.instructor }}</h4>			
+<div class="container">
+	<header class="jumbotron my-4">
+		<h1 class="display-3">{{ course.name }}</h1>
+		<p class="lead">{{ course.description }}</p>
+		<form method="post" action="{% url 'courses:enrollment' course.pk %}">
+			{% csrf_token %}
+			<button type="submit" class="btn btn-primary btn-lg">Inscrever-se no curso</button>
+		</form>
+	</header>	
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="card-body">
+				<h3 class="card-title">Instrutor</h3>
+				<h4>{{ course.instructor }}</h4>
+			</div>
 		</div>
 	</div>
-	<div class="col-lg-6">
-		<div class="card-body">
-			<a href="#">
-     			<img class="img-fluid rounded mb-3 mb-md-0" 
-     				src="http://placehold.it/700x300" alt="">
-   			</a>
-   			{% for tag in course.keywords.all %}
-				tag
-			{% endfor %}
-		</div>
-	</div>			
 </div>
-      
 {% endblock %}

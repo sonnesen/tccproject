@@ -1,0 +1,25 @@
+{% for course in courses %}
+  <div class="col-lg-4 col-sm-6 portfolio-item">
+    <div class="card h-100">
+      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+      <div class="card-body">
+        <h4 class="card-title">
+          <a href="{% url 'courses:course_units' course.pk %}"> {{ course.name }}</a>
+        </h4>
+        <p class="card-text">
+          {{ course.description|linebreaks }}
+        </p>
+        <p class="card-text">
+          <i class="fa fa-tags" aria-hidden="true"></i> Tags:
+          {% for tag in course.keywords.all %}
+            {{ tag }}
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">            
+    <p class="text-muted">Você ainda não se inscreveu em nenhum curso!</p>
+  </div>
+{% endfor %}

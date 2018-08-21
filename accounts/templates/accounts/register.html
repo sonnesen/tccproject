@@ -1,0 +1,20 @@
+{% extends 'accounts/base_accounts.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="card card-register mx-auto mt-5">
+	<div class="card-header">Registrar-se</div>
+	<div class="card-body">
+		<form action="{% url 'accounts:register' %}" method="post" novalidate>
+		  {% csrf_token %}	
+			{% include 'includes/form.html' %}			
+			<button class="btn btn-primary btn-block">Registrar</button>
+		</form>
+		<div class="text-center">
+			<a class="d-block small mt-3" href="{% url 'accounts:login' %}">Entrar</a> 
+			<a class="d-block small" href="forgot-password.html">Esqueci minha senha</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load courses_tags %}
+{% load widget_tweaks %}
+
+{% block styles %}
+<style>
+  .video-fluid {
+    widht: 100%;
+    height: auto;
+  }
+</style>
+{% endblock %}
+
+{% block navigation_content %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{ course.name }}">
+    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+      href="#collapseCourses" data-parent="#dashboard">
+      <i class="fa fa-book" aria-hidden="true"></i>
+      <span class="nav-link-text">{{ course.name }}</span>
+    </a>
+    <ul class="sidenav-second-level collapse" id="collapseCourses">
+      {% course_menu_units course %}
+    </ul>
+  </li>
+{% endblock %}
+        
+{% block content %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      {% block breadcrumbs %}
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:dashboard' %}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:course_units' course.pk %}">{{ course.name }}</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="card-link" href="{% url 'courses:unit_detail' unit.course.pk unit.pk %}"> {{ unit }}</a>
+        </li>
+        <li class="breadcrumb-item active">{{ video }}</li>
+      </ol>
+      {% endblock %}
+      {% block content_page %}
+      <div class="row">   
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h1 class="my-1">{{ video }}</h1>
+            </div>
+            <div class="card-body">  
+              {% if video.is_embedded %}
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" allowfullscreen
+                  src="{{ video.embedded }}?rel=0&autoplay=1">
+                </iframe>
+              </div>
+              {% else %}
+              <div class="embed-responsive embed-responsive-16by9">
+	              <video class="video-fluid z-depth-1" src="{{ video.file.url }}" autoplay controls>
+	                Seu navegador não suporta a tag de vídeo.
+	              </video>
+              </div>           
+              {% endif %}  
+            </div>
+          </div>
+        </div>              
+			</div>
+			{% endblock %}
+		</div>
+	</div>
+	
+	<footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright © Studere 2018</small>
+      </div>
+    </div>
+  </footer>
+    
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+{% endblock %}

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
@@ -45,18 +46,8 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_serializer',
     'widget_tweaks',
-    'principal',
     'accounts',    
-    'dashboard',
-    'instructors',
-    'categories',
-    'courses',
-    'units',
-    'documents',
-    'videos',
-    'exams',
-    'questions',
-    'alternatives',
+    'courses',        
 ]
 
 MIDDLEWARE = [
@@ -126,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -158,6 +149,10 @@ MEDIA_URL = '/media/'
 INTERNAL_IPS = ['127.0.0.1',]
 
 # Authentication
-LOGIN_REDIRECT_URL = 'dashboard:principal'
-LOGOUT_REDIRECT_URL = 'principal:principal'
+LOGIN_REDIRECT_URL = 'courses:dashboard'
+LOGOUT_REDIRECT_URL = 'courses:home'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 5 * 60
+
 
