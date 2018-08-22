@@ -5,7 +5,7 @@
   {% block navigation %}
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="{% url 'courses:home' %}">Studere</a>
+    <a class="navbar-brand" href="{% url 'courses:home' %}"> Studere</a>
     <button class="navbar-toggler navbar-toggler-right" 
       type="button" data-toggle="collapse" data-target="#navbarResponsive" 
       aria-controls="navbarResponsive" aria-expanded="false" 
@@ -17,7 +17,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" href="{% url 'courses:dashboard' %}">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
+            <span class="nav-link-text"> Dashboard</span>
           </a>
         </li>
         {% block navigation_content %}
@@ -25,7 +25,7 @@
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" 
             href="#collapseCourses" data-parent="#dashboard">
             <i class="fa fa-briefcase" aria-hidden="true"></i>
-            <span class="nav-link-text">Meus cursos</span>
+            <span class="nav-link-text"> Meus cursos</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseCourses">
             {% user_menu_courses user %}
@@ -36,17 +36,31 @@
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" 
             href="#collapseAccount" data-parent="#dashboard">
             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-            <span class="nav-link-text">Minha Conta</span>
+            <span class="nav-link-text"> Minha Conta</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseAccount">
             <li>
-              <a href="{% url 'accounts:update' %}">Dados pessoais</a>
+              <a href="{% url 'accounts:update' %}"> Dados pessoais</a>
             </li>
             <li>
-              <a href="{% url 'accounts:password_change' %}">Alterar senha</a>
+              <a href="{% url 'accounts:password_change' %}"> Alterar senha</a>
             </li>            
           </ul>
-        </li>        
+        </li>
+        {% if user.is_authenticated and user.is_staff %}
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relatórios">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" 
+            href="#collapseReports" data-parent="#dashboard">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            <span class="nav-link-text"> Relatórios</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseReports">
+            <li>
+              <a href="{% url 'courses:users_report' %}"> Usuários</a>
+            </li>            
+          </ul>
+        </li>
+        {% endif %}
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -127,14 +141,14 @@
             }, {
             	type: 'error'
             });
-          {% elif messge.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
             $.notify({
             	icon: 'fa fa-exclamation-triangle',
               message: '{{ message }}'
             }, {
               type: 'warning'
             });  
-          {% elif messge.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+          {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
             $.notify({
             	icon: 'fa fa-info-circle',
               message: '{{ message }}'

@@ -57,3 +57,8 @@ def convert_ascii_to_string(code):
 @stringfilter
 def concat_str(value, arg):
     return "{}{}".format(value, arg)
+
+@register.simple_tag
+def num_watched_videos_by_user(course, user):
+    return course.num_watched_videos_by_user(user)
+    

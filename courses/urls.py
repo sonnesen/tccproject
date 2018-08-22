@@ -2,7 +2,7 @@ from django.urls import path
 
 from courses.views import CourseListView, CourseDetailView, EnrollmentView, \
     HomeView, DashboardView, UnitListView, UnitDetailView, UnitVideoView, \
-    ExamDetailView, ExamFormView
+    ExamDetailView, ExamFormView, UsersReportView, CourseCertificateView
 
 
 app_name = 'courses'
@@ -10,6 +10,7 @@ app_name = 'courses'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('courses/', CourseListView.as_view(), name='course_list'),
+    path('courses/<int:course_id>/certificate/', CourseCertificateView.as_view(), name='course_certificate'),
     path('courses/<int:course_id>/detail/', CourseDetailView.as_view(), name='course_detail'),
     path('courses/<int:course_id>/enrollment/', EnrollmentView.as_view(), name='enrollment'),
     path('courses/<int:course_id>/units/', UnitListView.as_view(), name='course_units'),
@@ -18,6 +19,8 @@ urlpatterns = [
     path('courses/<int:course_id>/units/<int:unit_id>/exam/<int:exam_id>/detail/', ExamDetailView.as_view(), name='exam_detail'),
     path('courses/<int:course_id>/units/<int:unit_id>/exam/<int:exam_id>/form/', ExamFormView.as_view(), name='exam_form'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('reports/users', UsersReportView.as_view(), name='users_report')
+    
     
 #     path('', InstructorListView.as_view(), name="instructor_list"),
 #     path('create/', InstructorCreateView.as_view(), name='instructor_create'),

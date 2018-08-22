@@ -16,7 +16,10 @@
       {% endif %}      
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="btn btn-outline-secondary" href="{% url 'courses:course_list' %}">Cursos</a></li>
-        {% if user.is_authenticated %}                
+        {% if user.is_authenticated %}
+          {% if user.is_staff %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+          {% endif %}                
         <li class="nav-item"><a class="nav-link" href="{% url 'courses:dashboard' %}">Painel</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-fw fa-sign-out"></i>Sair</a></li>
         {% else %}

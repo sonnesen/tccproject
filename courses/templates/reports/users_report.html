@@ -1,0 +1,96 @@
+{% extends 'dashboard/dashboard.html' %}
+{% load courses_tags %}
+{% load widget_tweaks %}
+{% load humanize %}
+
+{% block navigation_content %}
+  {% comment %}
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{ course.name }}">
+    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+      href="#collapseCourses" data-parent="#dashboard">
+      <i class="fa fa-book" aria-hidden="true"></i>
+      <span class="nav-link-text">{{ course.name }}</span>
+    </a>
+    <ul class="sidenav-second-level collapse" id="collapseCourses">
+      {% course_menu_units course %}
+    </ul>
+  </li>
+  {% endcomment %}
+{% endblock %}
+        
+{% block content %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      {% block breadcrumbs %}
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'courses:dashboard' %}"> Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active"> Relatório de Usuários</li>        
+      </ol>
+      {% endblock %}
+      {% block content_page %}
+      <div class="row">   
+        <div class="col-12">
+          <h1 class="my-1">Relatório de Usuários</h1>
+        </div>
+        <div class="col-12">
+          {% for user in users %}
+          <div class="card">
+            <div class="card-header">
+              <h2>{{ user.get_full_name|default:user.username }}</h2>
+            </div>
+            <div class="card-body">
+              {% if user.enrollments.count > 0 %}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Videos</th>
+                    <th scope="col">Avaliação</th>
+                    <th scope="col">Acertos</th>
+                    <th scope="col">Situação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for course in courses %}
+                    {% if course.user_id == user.id %}
+                      <tr>
+									      <th scope="row">{{ course.course_name }}</th>
+									      <td>
+									        {{ course.num_watched_videos_by_user }} de {{ course.num_videos }}
+									      </td>									    
+									      <td>{{ course.exam_title }}</td>
+									      <td>{{ course.exam_hits }} de {{ course.exam_total }}</td>
+									      <td>{{ course.enrollment_status }}</td>
+									    </tr>
+                    {% endif %}
+                  {% endfor %}
+                </tbody>
+							</table>
+							{% else %}							
+								<p class="card-text text-muted">Usuário não possui nenhum registro!</p>
+						  {% endif %}												
+					  </div>
+					</div>  
+					{% endfor %}
+        </div>
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+  
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright © Studere 2018</small>
+      </div>
+    </div>
+  </footer>
+    
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+{% endblock %}

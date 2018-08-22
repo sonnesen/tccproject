@@ -1,4 +1,5 @@
 {% extends 'courses/base_courses.html' %} 
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -6,9 +7,17 @@
 	<h1 class="my-4">Cursos</h1>
 	
 	{% for course in courses %}
-		<div class="row">
+	  <div class="row mb-5">
 			<div class="col-md-7">
-				<a href="#"> <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt=""></a>
+        <a href="#"> 
+          <img class="img-fluid rounded mb-3 mb-md-0"
+			    {% if image.course %}
+			    src="{% static course.image %}"
+			    {% else %} 
+			    src="http://placehold.it/700x300"
+			    {% endif %}
+			    alt="">
+			  </a>
 			</div>
 			<div class="col-md-5">
 				<h3>{{ course.name }}</h3>

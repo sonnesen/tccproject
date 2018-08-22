@@ -10,7 +10,10 @@
       <span class="nav-link-text">{{ course.name }}</span>
     </a>
     <ul class="sidenav-second-level collapse" id="collapseCourses">
-      {% course_menu_units course %}            
+      {% course_menu_units course %}
+      <li>
+        <a href="{% url 'courses:course_certificate' course.pk %}"><i class="fa fa-certificate" aria-hidden="true"></i></i> Certificado</a>
+      </li>
     </ul>
   </li>
 {% endblock %}

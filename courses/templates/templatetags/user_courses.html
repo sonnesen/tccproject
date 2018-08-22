@@ -1,7 +1,17 @@
+{% load static %}
+
 {% for course in courses %}
   <div class="col-lg-4 col-sm-6 portfolio-item">
     <div class="card h-100">
-      <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+      <a href="#">
+        <img class="card-img-top" 
+          {% if image.course %}
+          src="{% static course.image %}"
+          {% else %} 
+          src="http://placehold.it/700x400"
+          {% endif %} 
+          alt="">
+      </a>
       <div class="card-body">
         <h4 class="card-title">
           <a href="{% url 'courses:course_units' course.pk %}"> {{ course.name }}</a>

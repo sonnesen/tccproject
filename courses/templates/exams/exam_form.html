@@ -47,14 +47,13 @@
               <form method="post" novalidate>
                 {% csrf_token %}
                 {% if form.non_field_errors %}
-                  <div class="alert alert-dander role="alert">
+                  <div class="alert alert-danger role="alert">
                   {% for error in form.non_field_errors %}
                     <p {% if forloop.last %} class="mb-0" {% endif %}>{{ error }}</p>
                   {% endfor %}   
                   </div>
                 {% endif %}
-                <ul class="list-group">
-                  {{ user_answers }}
+                <ul class="list-group">                  
 	                {% for question in exam.questions.all %}
 	                  <li class="list-group-item">
 	                    {% with question_number=forloop.counter %}
@@ -66,7 +65,7 @@
 									        <div class="form-check">
 									          <input type="radio"
 									            class="form-check-input"  
-									            name="question_{{ question_number }}" 
+									            name="question_{{ question.pk }}" 
 									            id="id_alternative_{{ alternative.pk }}" 
 									            value="{{ alternative.pk }}"
 									            required									            
@@ -80,7 +79,7 @@
 									            {% convert_ascii_to_string alternative_counter|add:'96' %}. {{ alternative }}
 									          </label>
 									          {% if forloop.last %}
-										          {% with question_tag_name='question_'|concat_str:question_number %}
+										          {% with question_tag_name='question_'|concat_str:question.pk %}
 										            {% for field in form.fields %}
 										              {% if field.name == question_tag_name %}
 										                {% for error in field.errors %}

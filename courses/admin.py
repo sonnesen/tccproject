@@ -7,13 +7,6 @@ from courses.models import Course, Document, Video, Unit, Question, Exam, \
     Alternative, Instructor, Category
 
 
-class UnitInline(admin.TabularInline):
-    model = Unit
-    extra = 1
-    verbose_name = 'Course Unit'
-    verbose_name_plural = 'Course Units'
-
-    
 class EditLinkToInlineObject(object):
 
     def edit_link(self, instance):
@@ -27,6 +20,13 @@ class EditLinkToInlineObject(object):
             return ''
 
 
+class UnitInline(EditLinkToInlineObject, TabularInline):
+    model = Unit
+    readonly_fields = ('edit_link',)
+    verbose_name = 'Course Unit'
+    verbose_name_plural = 'Course Units'
+
+    
 class QuestionInline(EditLinkToInlineObject, TabularInline):
     model = Question
     verbose_name = 'Exam Question'
@@ -38,33 +38,35 @@ class QuestionInline(EditLinkToInlineObject, TabularInline):
         pass
 
 
-class DocumentInLine(admin.TabularInline):
+class DocumentInLine(TabularInline):
     model = Document
     extra = 1
     verbose_name = 'Unit Document'
     verbose_name_plural = 'Unit Documents'
 
     
-class VideoInline(admin.TabularInline):
+class VideoInline(TabularInline):
     model = Video
     extra = 1
     verbose_name = 'Unit Video'
     verbose_name_plural = 'Unit Videos'
     
 
-class ExamInline(admin.TabularInline):
+class ExamInline(EditLinkToInlineObject, TabularInline):
     model = Exam
     extra = 1
+    readonly_fields = ('edit_link',)
     verbose_name = 'Unit Exam'
     verbose_name_plural = 'Unit Exams'
 
 
-class AlternativeInline(admin.TabularInline):
+class AlternativeInline(TabularInline):
     model = Alternative
+    extra = 4
 
 
 @admin.register(Course)    
-class CourseModelAdmin(admin.ModelAdmin):
+class CourseModelAdmin(ModelAdmin):
     list_display = ('name', 'created_at', 'category', 'instructor',
                     'keyword_list', 'description', 'image',)
     autocomplete_fields = ('category', 'instructor',)
@@ -83,7 +85,7 @@ class CourseModelAdmin(admin.ModelAdmin):
 
     
 @admin.register(Document)
-class DocumentModelAdmin(admin.ModelAdmin):
+class DocumentModelAdmin(ModelAdmin):
     list_display = ('name', 'file', 'unit', 'course')
     search_fields = ('name',)
     autocomplete_fields = ('unit',)
@@ -94,7 +96,7 @@ class DocumentModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(Video)
-class VideoModelAdmin(admin.ModelAdmin):
+class VideoModelAdmin(ModelAdmin):
     list_display = ('name', 'embedded', 'file', 'unit', 'course')
     search_fields = ('name',)
     autocomplete_fields = ('unit',)
@@ -122,7 +124,7 @@ class ExamModelAdmin(ModelAdmin):
     
 
 @admin.register(Unit)
-class UnitModelAdmin(admin.ModelAdmin):
+class UnitModelAdmin(ModelAdmin):
     list_display = ('id', 'name', 'course',)
     autocomplete_fields = ('course',)
     search_fields = ('name',)
@@ -131,7 +133,7 @@ class UnitModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(Question)    
-class QuestionModelAdmin(admin.ModelAdmin):
+class QuestionModelAdmin(ModelAdmin):
     list_display = ('id', 'statement', 'exam', 'unit', 'course',)
     search_fields = ('statement',)
     autocomplete_fields = ('exam',)
@@ -146,13 +148,13 @@ class QuestionModelAdmin(admin.ModelAdmin):
     
     
 @admin.register(Instructor)
-class InstructorModelAdmin(admin.ModelAdmin):
+class InstructorModelAdmin(ModelAdmin):
     list_display = ('name', 'contact', 'about',)
     search_fields = ('name',)    
 
     
 @admin.register(Alternative)
-class AlternativeModelAdmin(admin.ModelAdmin):
+class AlternativeModelAdmin(ModelAdmin):
     list_display = ('description', 'is_correct', 'course', 'unit', 'exam', 'question',)
     fields = ('description', 'is_correct', 'course', 'unit', 'exam', 'question',)
     readonly_fields = ('course', 'unit', 'exam', 'question',)
@@ -171,7 +173,7 @@ class AlternativeModelAdmin(admin.ModelAdmin):
     
     
 @admin.register(Category)
-class CategoryModelAdmin(admin.ModelAdmin):
+class CategoryModelAdmin(ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     

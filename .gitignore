@@ -6,3 +6,4 @@ venv/
 .pydevproject
 .project
 .settings/
+media/

@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.aggregates import Max
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
 
@@ -65,8 +66,49 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
-
-
+    
+    def num_videos(self):
+        total = 0
+        units = self.units.all()        
+        for unit in units:
+            total = total + unit.num_videos()
+        return total
+    
+    def videos_list(self):
+        videos = list()
+        
+        for unit in self.units.all():
+            for video in unit.videos.all():
+                videos.append(video)
+                
+        return videos
+    
+    def num_watched_videos_by_user(self, user):
+        course_videos = self.videos_list()
+        watched_videos = WatchedVideos.objects.filter(user=user, video__in=course_videos).count()
+        return watched_videos
+    
+    def exams_by_user(self, user):
+        exams = list()
+        units = self.units.all()
+        course_exams = list()
+        
+        for unit in units:
+            for exam in unit.exams.all():
+                course_exams.append(exam)
+        
+        tries = ExamTry.objects.filter(user=user, exam__in=course_exams).values('exam_id').annotate(max_hits=Max('hits')).order_by()
+        
+        for t in tries:
+            exam = Exam.objects.get(pk=t['exam_id'])
+            exams.append({
+                'exam': exam,
+                'hits': t['max_hits']
+            })
+        
+        return exams
+        
+        
 class Unit(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.CharField(max_length=500, null=False, blank=False)
@@ -77,13 +119,48 @@ class Unit(models.Model):
     def __str__(self):
         return self.name
     
+    def num_videos(self):
+        return self.videos.count()
+    
     
 class Enrollment(models.Model):
+    IN_PROGRESS_STATUS = 0
+    DONE_STATUS = 1
     
-    user = models.ForeignKey(get_user_model(), related_name='+', on_delete=models.CASCADE)
+    STATUS_CHOICES = (
+        (IN_PROGRESS_STATUS, 'Em andamento'),
+        (DONE_STATUS, 'Concluído')
+    )
+        
+    user = models.ForeignKey(get_user_model(), related_name='enrollments', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, related_name='enrollments', on_delete=models.CASCADE)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=IN_PROGRESS_STATUS, blank=True) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def update_status(self):
+        course_completed = True
+        num_watched_videos_by_user = self.course.num_watched_videos_by_user(self.user)
+        num_videos = self.course.num_videos()
+        course_exams = list()
+        
+        for unit in self.course.units.all():
+            exams = unit.exams.all()
+            for exam in exams:
+                course_exams.append(exam)
+        
+        for exam in course_exams:
+            exam_try = ExamTry.objects.filter(user=self.user, exam=exam).values('exam_id').annotate(max_hits=Max('hits')).order_by()            
+            exam_num_questions = exam.questions.count()
+            if not exam_try or exam_try[0]['max_hits'] == 0 or ((exam_num_questions / exam_try[0]['max_hits']) < 0.70):
+                course_completed = False 
+        
+        if num_watched_videos_by_user < num_videos:
+            course_completed = False
+            
+        if course_completed:
+            self.status = 1
+            self.save()                
 
     
 class Document(models.Model):
@@ -129,7 +206,7 @@ class Video(models.Model):
 
     
 class WatchedVideos(models.Model):
-    user = models.ForeignKey(get_user_model(), related_name='+', on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), related_name='watchedvideos', on_delete=models.CASCADE)
     video = models.ForeignKey(Video, related_name='watched', on_delete=models.CASCADE)
     times = models.IntegerField(blank=True, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -148,7 +225,7 @@ class Exam(models.Model):
 
 class ExamTry(models.Model):    
     exam = models.ForeignKey(Exam, related_name='tries', on_delete=models.CASCADE, null=False) 
-    user = models.ForeignKey(get_user_model(), related_name='+', on_delete=models.CASCADE) 
+    user = models.ForeignKey(get_user_model(), related_name='tries', on_delete=models.CASCADE) 
     hits = models.IntegerField(blank=True, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

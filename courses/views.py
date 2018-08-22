@@ -1,13 +1,20 @@
+import copy
+
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.forms.forms import Form
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, \
+    UserPassesTestMixin
+from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import render_to_string
+from django.utils import timezone, formats
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
+from weasyprint import HTML
 
-# from courses.forms import ExamForm
 from courses.models import Course, Enrollment, Unit, Video, Document, Exam, \
     ExamTry, WatchedVideos, Answer
+from django.urls.base import reverse
 
 
 class CourseListView(View):
@@ -26,7 +33,7 @@ class CourseDetailView(DetailView):
 class EnrollmentView(LoginRequiredMixin, View):
     
     def get(self, request, *args, **kwargs):
-        return self.post(request, args, kwargs)
+        return self.post(request, *args, **kwargs)
         
     def post(self, request, *args, **kwargs):
         course = get_object_or_404(Course, pk=kwargs.get('course_id'))
@@ -104,6 +111,9 @@ class UnitVideoView(LoginRequiredMixin, View):
         watched_videos, created = WatchedVideos.objects.get_or_create(user=request.user, video=video)
         watched_videos.times = watched_videos.times + 1
         watched_videos.save()
+        
+        enrollment = Enrollment.objects.get(user=request.user, course=course)
+        enrollment.update_status()
         
         return render(request, self.template_name, self.context)
 
@@ -205,7 +215,10 @@ class ExamFormView(LoginRequiredMixin, View):
         
         self.context['user_answers'] = user_answers
                  
-        if has_error:
+        if has_error:            
+            errors = list()
+            errors.append('Existe uma ou mais perguntas que não foram respondidas!')
+            self.context['form']['non_field_errors'] = errors
             return render(request, self.template_name, self.context)
         
         exam_try = ExamTry(exam=exam, user=request.user)
@@ -230,6 +243,81 @@ class ExamFormView(LoginRequiredMixin, View):
         for answer in answers:
             answer.exam_try = exam_try
             answer.save()
+            
+        enrollment = Enrollment.objects.get(user=request.user, course=course)
+        enrollment.update_status()    
         
-        return redirect ('courses:exam_detail', course_id=1, unit_id=1, exam_id=1)
+        return redirect ('courses:exam_detail', course_id=course.pk, unit_id=unit.pk, exam_id=exam.pk)
         
+
+class UsersReportView(LoginRequiredMixin, UserPassesTestMixin, View):
+    template_name = 'reports/users_report.html'
+    context = {}
+    per = ''
+    
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get(self, request, *args, **kwargs):
+        User = get_user_model()
+        
+        courses = list()
+        users = User.objects.all()
+        enrollments = Enrollment.objects.all()
+        
+        for enrollment in enrollments:
+            tries = enrollment.course.exams_by_user(enrollment.user)
+            
+            course = {
+                'user_id': enrollment.user.id,
+                'course_name': enrollment.course.name,
+                'num_watched_videos_by_user': enrollment.course.num_watched_videos_by_user(enrollment.user),
+                'num_videos': enrollment.course.num_videos(),
+                'exam_title': 'Nenhuma avaliação encontrada!',
+                'exam_hits': 0,
+                'exam_total': 0,
+                'enrollment_status': enrollment.get_status_display() 
+            }
+            
+            for t in tries:
+                other_course = copy.deepcopy(course)
+                other_course['exam_title'] = t['exam'].title
+                other_course['exam_hits'] = t['hits']
+                other_course['exam_total'] = t['exam'].questions.count
+                courses.append(other_course)
+            
+            if not tries:
+                courses.append(course)                        
+        
+        self.context['users'] = users        
+        self.context['courses'] = courses
+        
+        return render(request, self.template_name, self.context)        
+
+
+class CourseCertificateView(LoginRequiredMixin, View):
+    
+    def get(self, request, *args, **kwargs):
+        course = Course.objects.get(pk=kwargs.get('course_id'))        
+        enrollment = Enrollment.objects.get(user=request.user, course=course)
+        
+        if enrollment.status == 0:
+            messages.warning(request, 'Você ainda não concluiu este curso e por isso não é possível emitir o certificado ainda!')
+            return redirect(reverse('courses:course_units', kwargs={'course_id': course.pk}))
+        
+        today = timezone.now()
+        today = formats.date_format(today, format="DATE_FORMAT")
+        
+        context = {
+            'course': course, 
+            'user': request.user,
+            'today': today,
+        }
+        
+        html_string = render_to_string(template_name='courses/certificate.html', context=context) 
+        pdf_file = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'filename=certificate.pdf'
+            
+        return response
+    
