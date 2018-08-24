@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.urls import path
 
 from courses.views import CourseListView, CourseDetailView, EnrollmentView, \
@@ -41,3 +42,7 @@ urlpatterns = [
 #     path('<int:pk>/delete/', CategoryDeleteView.as_view(), name="category_delete")
 
 ]
+
+admin.site.site_header='Studere Cursos On-line'
+admin.site.index_title='Administração'
+admin.site.site_title='Seja bem vindo ao Studere Cursos On-line'

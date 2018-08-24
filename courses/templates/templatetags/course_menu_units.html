@@ -1,6 +1,6 @@
 {% for unit in units %}
 <li>
-  <a href="#"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> {{ unit }}</a>
+  <a href="{% url 'courses:unit_detail' unit.course.pk unit.pk %}"><i class="fa fa-caret-square-o-right" aria-hidden="true"></i> {{ unit }}</a>
 </li>
 {% empty %}
 <li>

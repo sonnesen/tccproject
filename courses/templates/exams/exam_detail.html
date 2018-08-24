@@ -1,7 +1,6 @@
 {% extends 'dashboard/dashboard.html' %}
 {% load courses_tags %}
 {% load widget_tweaks %}
-{% load humanize %}
 
 {% block navigation_content %}
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="{{ course.name }}">
@@ -15,7 +14,7 @@
     </ul>
   </li>
 {% endblock %}
-        
+
 {% block content %}
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -35,13 +34,13 @@
       </ol>
       {% endblock %}
       {% block content_page %}
-      <div class="row">   
+      <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
               <h1 class="my-1">{{ exam }}</h1>
             </div>
-            <div class="card-body">  
+            <div class="card-body">
                 <h2>Resumo das suas tentativas anteriores</h2>
                 {% if tries %}
                 <table class="table">
@@ -56,7 +55,7 @@
                     {% for try in tries %}
                     <tr>
                       <th scope="row">{{ forloop.counter }}</th>
-                      <td>{{ try.updated_at|naturaltime }}</td>
+                      <td>{{ try.updated_at }}</td>
                       <td>{{ try.hits }} de {{ try.exam.questions.count }}</td>
                     </tr>
                     {% endfor %}
@@ -66,7 +65,7 @@
                 {% else %}
                 <p>Você ainda não realizou nenhum tentativa para esta avaliação!</p>
                 <a href="{% url 'courses:exam_form' course.pk unit.pk exam.pk %}">Iniciar Avaliação</a>
-                {% endif %}                
+                {% endif %}
             </div>
           </div>
         </div>
@@ -74,7 +73,7 @@
       {% endblock %}
     </div>
   </div>
-  
+
   <footer class="sticky-footer">
     <div class="container">
       <div class="text-center">
@@ -82,7 +81,7 @@
       </div>
     </div>
   </footer>
-    
+
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fa fa-angle-up"></i>
