@@ -5,8 +5,6 @@ name = "pypi"
 
 [dev-packages]
 django-debug-toolbar = "*"
-django-extensions = "*"
-weasyprint = "*"
 
 [packages]
 django = "*"
@@ -21,6 +19,8 @@ gunicorn = "*"
 whitenoise = "*"
 "psycopg2-binary" = "*"
 django-heroku = "*"
+django-extensions = "*"
+weasyprint = "*"
 
 [requires]
 python_version = "3.6"
