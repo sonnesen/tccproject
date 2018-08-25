@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+django-debug-toolbar = "*"
+django-extensions = "*"
+weasyprint = "*"
+
+[packages]
+django = "*"
+django-rest-swagger = "*"
+django-taggit = "*"
+django-taggit-serializer = "*"
+djangorestframework = "*"
+pillow = "*"
+django-widget-tweaks = "*"
+dj-database-url = "*"
+gunicorn = "*"
+whitenoise = "*"
+"psycopg2-binary" = "*"
+django-heroku = "*"
+
+[requires]
+python_version = "3.6"

@@ -7,3 +7,5 @@ venv/
 .project
 .settings/
 media/
+staticfiles/
+*.pyc
