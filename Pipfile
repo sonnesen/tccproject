@@ -21,6 +21,7 @@ django-heroku = "*"
 django-extensions = "*"
 weasyprint = "*"
 django-debug-toolbar = "*"
+python-decouple = "*"
 
 [requires]
 python_version = "3.6"

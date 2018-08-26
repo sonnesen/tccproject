@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import django_heroku
 
+from decouple import config 
+
 #from django.conf.global_settings import AUTHENTICATION_BACKENDS
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,10 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!m7$)zzdce527gek71s435@e5rj#_=wclw6w7#y2y36sp=wbb0'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
+TEMPLATE_DEBUG = config('TEMPLATE_DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
