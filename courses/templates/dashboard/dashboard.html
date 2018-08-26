@@ -6,6 +6,11 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="{% url 'courses:home' %}"> Studere</a>
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav text-center">
+      <span class="navbar-text mx-2 navbar-light">Seja bem-vindo(a), {{ user.get_full_name|default:user.username }}</span>
+    </ul>
+    {% endif %}
     <button class="navbar-toggler navbar-toggler-right" 
       type="button" data-toggle="collapse" data-target="#navbarResponsive" 
       aria-controls="navbarResponsive" aria-expanded="false" 
@@ -68,12 +73,7 @@
             <i class="fa fa-fw fa-angle-left"></i>
           </a>
         </li>
-      </ul>
-      <ul class="navbar-nav ml-auto text-center">
-        <span class="navbar-text mx-2 navbar-light">
-          Seja bem-vindo(a), {{ user.get_full_name|default:user.username }}
-        </span>
-      </ul>
+      </ul>      
       <ul class="navbar-nav ml-auto">        
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#logoutModal">

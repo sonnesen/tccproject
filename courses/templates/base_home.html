@@ -3,26 +3,26 @@
 {% block navigation %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top justify-content-between">
     <a class="navbar-brand" href="{% url 'courses:home' %}">Studere</a>
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav text-center">
+      <span class="navbar-text mx-2 navbar-light">Seja bem-vindo(a), {{ user.get_full_name|default:user.username }}</span>
+    </ul>
+    {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse"
       data-target="#navbarResponsive" aria-controls="navbarResponsive"
       aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      {% if user.is_authenticated %}
-      <ul class="navbar-nav ml-auto text-center">
-        <span class="navbar-text mx-2 navbar-light">Seja bem-vindo(a), {{ user.get_full_name|default:user.username }}</span>
-      </ul>
-      {% endif %}      
+    <div class="collapse navbar-collapse" id="navbarResponsive">            
       <ul class="navbar-nav ml-auto">
         <form class="form-inline ml-auto mt-1">
-          <li class="nav-item"><a class="btn btn-outline-secondary" href="{% url 'courses:course_list' %}">Cursos</a></li>
+          <li class="nav-item"><a class="btn btn-outline-secondary ml-2" href="{% url 'courses:course_list' %}">Cursos</a></li>
           {% if user.is_authenticated %}
             {% if user.is_staff %}
-              <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+              <li class="nav-item"><a class="btn btn-outline-secondary ml-2" href="{% url 'admin:index' %}">Admin</a></li>
             {% endif %}                
-          <li class="nav-item"><a class="nav-link" href="{% url 'courses:dashboard' %}">Painel</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-fw fa-sign-out"></i>Sair</a></li>
+          <li class="nav-item"><a class="btn btn-outline-secondary ml-2" href="{% url 'courses:dashboard' %}">Painel</a></li>
+          <li class="nav-item"><a class="btn btn-primary ml-2" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-fw fa-sign-out"></i>Sair</a></li>
           {% else %}        
           <a class="btn btn-outline-secondary ml-2" href="{% url 'accounts:login' %}">Entrar</a>
           <a class="btn btn-primary ml-2" href="{% url 'accounts:register' %}">Registrar</a>
