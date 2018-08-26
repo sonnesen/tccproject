@@ -30,7 +30,7 @@ def user_courses(user):
 
 
 def get_course_units(course):
-    units = Unit.objects.filter(course=course).all()    
+    units = Unit.objects.filter(course=course).order_by('pk').all()    
     return units
 
 
