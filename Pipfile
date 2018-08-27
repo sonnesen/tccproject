@@ -22,6 +22,8 @@ django-extensions = "*"
 weasyprint = "*"
 django-debug-toolbar = "*"
 python-decouple = "*"
+django-storages = "*"
+"boto3" = "*"
 
 [requires]
 python_version = "3.6"
