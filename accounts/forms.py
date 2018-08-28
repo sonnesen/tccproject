@@ -23,9 +23,9 @@ class MyAuthenticationForm(AuthenticationForm):
 
 class RegistrationForm(UserCreationForm):
     
-    first_name = CharField(required=True, max_length=30)
-    last_name = CharField(required=True, max_length=150)
-    email = CharField(required=True, max_length=254)
+    first_name = CharField(label='Nome', required=True, max_length=30)
+    last_name = CharField(label='Sobrenome', required=True, max_length=150)
+    email = CharField(label='E-mail',required=True, max_length=254)
     
     class Meta:
         model = get_user_model()
