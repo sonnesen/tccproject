@@ -6,7 +6,7 @@
       <a href="#">
         <img class="card-img-top" 
           {% if course.image %}
-          src="{% static course.image.url %}"
+          src="{{ course.image.url }}"
           {% else %} 
           src="http://placehold.it/700x400"
           {% endif %} 
