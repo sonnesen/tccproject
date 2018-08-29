@@ -122,6 +122,9 @@ class Unit(models.Model):
     def num_videos(self):
         return self.videos.count()
     
+    class Meta:
+        ordering = ['name']
+    
     
 class Enrollment(models.Model):
     IN_PROGRESS_STATUS = 0
