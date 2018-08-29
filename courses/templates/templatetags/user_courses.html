@@ -5,8 +5,8 @@
     <div class="card h-100">
       <a href="#">
         <img class="card-img-top" 
-          {% if image.course %}
-          src="{% static course.image %}"
+          {% if course.image %}
+          src="{% static course.image.url %}"
           {% else %} 
           src="http://placehold.it/700x400"
           {% endif %} 
