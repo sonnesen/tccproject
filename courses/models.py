@@ -205,7 +205,10 @@ class Video(models.Model):
         return bool(self.embedded)
     
     def __str__(self):
-        return self.name    
+        return self.name
+    
+    class Meta:
+        ordering = ['name']    
 
     
 class WatchedVideos(models.Model):
