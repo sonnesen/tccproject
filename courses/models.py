@@ -107,6 +107,9 @@ class Course(models.Model):
             })
         
         return exams
+    
+    class Meta:
+        ordering = ['name']
         
         
 class Unit(models.Model):
